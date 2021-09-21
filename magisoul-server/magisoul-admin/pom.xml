@@ -41,7 +41,7 @@
         <!-- 网关依赖 -->
         <dependency>
             <groupId>org.magisoul</groupId>
-            <artifactId>magisoul-api-gateway</artifactId>
+            <artifactId>magisoul-api</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
 

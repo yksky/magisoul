@@ -14,7 +14,7 @@
         <module>magisoul-syncx</module>
         <module>magisoul-schedule</module>
         <module>magisoul-admin</module>
-        <module>magisoul-api-gateway</module>
+        <module>magisoul-api</module>
         <module>magisoul-data</module>
         <module>magisoul-framework</module>
         <module>magisoul-cache</module>
