@@ -39,18 +39,8 @@ spring:
         max-idle: 8
         min-idle: 0
         max-wait: -1
-#  jackson:
-#    #日期格式化
-#    date-format: yyyy-MM-dd HH:mm:ss
-#    serialization:
-#      indent_output: true
-#      fail_on_empty_beans: false
-#    deserialization:
-#      fail_on_unknown_properties: false
-#    #设置空如何序列化
-#    default-property-inclusion: NON_EMPTY
-#    parser:
-#      #允许出现特殊字符和转义符
-#      allow_unquoted_control_chars: true
-#      #允许出现单引号
-#      allow_single_quotes: true
+
+mybatis:
+  type-aliases-package: org.magisoul.**.entity
+  mapper-locations: classpath*:mapper/**/*SqlMap.xml
+  config-location: classpath:mybatis/mybatis-config.xml

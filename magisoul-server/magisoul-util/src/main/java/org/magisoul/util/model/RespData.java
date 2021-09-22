@@ -46,12 +46,15 @@ public class RespData<T> implements Serializable {
      * @param affectRowNum
      * @return
      */
-    public static RespData<String> getByAffectRowNum(Integer affectRowNum){
+    public  RespData getByAffectRowNum(Integer affectRowNum){
         if(affectRowNum.intValue()>0){
-            return success();
+            this.setCode(RespCodeEnum.SUCCESS.getCode());
+            this.setMessage(RespCodeEnum.SUCCESS.getMessage());
         }else{
-            return error();
+            this.setCode(RespCodeEnum.ERROR.getCode());
+            this.setMessage(RespCodeEnum.ERROR.getMessage());
         }
+        return this ;
     }
 
     public RespData buildSuccess(T data){

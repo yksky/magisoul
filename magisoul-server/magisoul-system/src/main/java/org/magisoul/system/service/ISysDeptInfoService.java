@@ -20,6 +20,6 @@ public interface ISysDeptInfoService {
 
     public RespData<List<SysDeptInfoDto>> list(QuerySysDeptInfoVo querySysDeptInfoVo);
 
-    public RespData<Pagination<SysUserInfoDto>> pageList(QuerySysDeptInfoVo querySysDeptInfoVo);
+    public RespData<Pagination<SysDeptInfoDto>> pageList(QuerySysDeptInfoVo querySysDeptInfoVo);
 
 }

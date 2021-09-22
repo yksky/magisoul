@@ -39,7 +39,7 @@ public class SysDeptInfoServiceImpl implements ISysDeptInfoService {
 
         SysDeptInfo data = checkResp.getData();
         Integer affectRowNum = this.sysDeptInfoMapper.add(data);
-        return RespData.getByAffectRowNum(affectRowNum);
+        return resp.getByAffectRowNum(affectRowNum);
     }
 
     @Override
@@ -50,37 +50,65 @@ public class SysDeptInfoServiceImpl implements ISysDeptInfoService {
         SysDeptInfo sysDeptInfo = this.getSysDeptInfo(sysDeptInfoDto);
         RespData<SysDeptInfo> checkResp = this.checkForm(sysDeptInfo);
         if(!checkResp.isSuccess()){
+            resp.clone(checkResp);
             return resp ;
         }
 
-        RespData<String> check = this.checkById(sysDeptInfo.getId());
+        Integer affectRowNum = this.sysDeptInfoMapper.updateForm(sysDeptInfo);
+        return resp.getByAffectRowNum(affectRowNum);
+    }
+
+    @Override
+    public RespData<String> updateById(SysDeptInfoDto sysDeptInfoDto) {
+        RespData<String> resp = new RespData<String>();
+
+        SysDeptInfo sysDeptInfo = this.getSysDeptInfo(sysDeptInfoDto);
+        RespData<SysDeptInfoDto> check = this.checkById(sysDeptInfo.getId());
         if(!check.isSuccess()){
             resp.clone(check);
             return resp ;
         }
 
-        Integer affectRowNum = this.sysDeptInfoMapper.updateForm(sysDeptInfo);
-        return RespData.getByAffectRowNum(affectRowNum);
-    }
-
-    @Override
-    public RespData<String> updateById(SysDeptInfoDto sysDeptInfoDto) {
-        return null;
+        Integer affectRowNum = this.sysDeptInfoMapper.updateById(sysDeptInfo);
+        return resp.getByAffectRowNum(affectRowNum);
     }
 
     @Override
     public RespData<SysDeptInfoDto> getById(Long id) {
-        return null;
+        return this.checkById(id);
     }
 
     @Override
     public RespData<List<SysDeptInfoDto>> list(QuerySysDeptInfoVo querySysDeptInfoVo) {
-        return null;
+        RespData<List<SysDeptInfoDto>> resp = new RespData<List<SysDeptInfoDto>>();
+
+        List<SysDeptInfo> dataList = this.sysDeptInfoMapper.list(querySysDeptInfoVo);
+        List<SysDeptInfoDto> dtoList = new ArrayList<SysDeptInfoDto>();
+        for(int i=0;i<dataList.size();i++){
+            SysDeptInfo data = dataList.get(i);
+            SysDeptInfoDto dto = this.getSysDeptInfoDto(data);
+            dtoList.add(dto);
+        }
+
+        return resp.buildSuccess(dtoList);
     }
 
     @Override
-    public RespData<Pagination<SysUserInfoDto>> pageList(QuerySysDeptInfoVo querySysDeptInfoVo) {
-        return null;
+    public RespData<Pagination<SysDeptInfoDto>> pageList(QuerySysDeptInfoVo querySysDeptInfoVo) {
+        RespData<Pagination<SysDeptInfoDto>> resp = new RespData<Pagination<SysDeptInfoDto>>();
+
+        List<SysDeptInfo> dataList = this.sysDeptInfoMapper.list(querySysDeptInfoVo);
+        Long count = this.sysDeptInfoMapper.count(querySysDeptInfoVo);
+
+        List<SysDeptInfoDto> dtoList = new ArrayList<SysDeptInfoDto>();
+        for(int i=0;i<dataList.size();i++){
+            SysDeptInfo data = dataList.get(i);
+            SysDeptInfoDto dto = this.getSysDeptInfoDto(data);
+            dtoList.add(dto);
+        }
+
+        Pagination<SysDeptInfoDto> data = new Pagination<>(querySysDeptInfoVo.getPageNo(), querySysDeptInfoVo.getPageSize(), count, dtoList);
+        return resp.buildSuccess(data);
     }
 
     private RespData<SysDeptInfo> checkForm(SysDeptInfo sysDeptInfo){
@@ -126,8 +154,8 @@ public class SysDeptInfoServiceImpl implements ISysDeptInfoService {
         return resp.build(RespCodeEnum.SUCCESS) ;
     }
 
-    private RespData<String> checkById(Long id){
-        RespData<String> resp = new RespData<String>();
+    private RespData<SysDeptInfoDto> checkById(Long id){
+        RespData<SysDeptInfoDto> resp = new RespData<SysDeptInfoDto>();
         if(id==null){
             resp.setCode(RespCodeEnum.PARAM_EMPTY_ERROR_CODE.getCode());
             resp.setMessage("主键Id为空,请重新输入");
@@ -135,7 +163,7 @@ public class SysDeptInfoServiceImpl implements ISysDeptInfoService {
         }
         SysDeptInfo data = this.sysDeptInfoMapper.getById(id);
         if(data==null){
-            resp.setData(RespCodeEnum.OBJECT_NOT_EXIST.getCode());
+            resp.setCode(RespCodeEnum.OBJECT_NOT_EXIST.getCode());
             resp.setMessage("该部门不存在,请重新输入");
             return resp ;
         }
@@ -144,7 +172,8 @@ public class SysDeptInfoServiceImpl implements ISysDeptInfoService {
             resp.setMessage("改部门已经删除,请重新输入");
             return resp ;
         }
-        return resp.build(RespCodeEnum.SUCCESS) ;
+        SysDeptInfoDto dto = this.getSysDeptInfoDto(data);
+        return resp.buildSuccess(dto);
     }
 
     private SysDeptInfo getSysDeptInfo(SysDeptInfoDto dto){
