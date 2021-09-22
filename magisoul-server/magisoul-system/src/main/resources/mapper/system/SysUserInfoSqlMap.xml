@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.magisoul.system.mapper.ISysUserInfoMapper">
+
+    <resultMap type="SysUserInfo" id="BaseResultMap">
+        <result column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="realname" property="realname"/>
+        <result column="phone" property="phone"/>
+        <result column="email" property="email"/>
+        <result column="user_type" property="userType"/>
+        <result column="enable_status" property="enableStatus"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="create_time" property="createTime"/>
+        <result column="creator" property="creator"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="updator" property="updator"/>
+    </resultMap>
+
+    <insert id="add" parameterType="SysUserInfo">
+    <![CDATA[
+        insert into sys_user_info
+        (id, username, password, realname, phone, email, user_type, enable_status, is_deleted,
+         create_time, creator, update_time, updator)
+        values (#{id}, #{username}, #{password}, #{realname}, #{phone}, #{email}, #{userType}, #{enableStatus}, #{isDeleted},
+                #{createTime}, #{creator}, #{updateTime}, #{updator})
+        ]]>
+    </insert>
+
+    <update id="updateForm" parameterType="SysDeptInfo">
+        update sys_user_info
+        set realname=#{realname},
+            enable_status=#{enableStatus},
+            phone = #{phone},
+            email = #{email},
+            user_type=#{userType},
+            update_time=#{updateTime},
+            updator=#{updator}
+        where id=#{id}
+    </update>
+
+    <update id="updateById" parameterType="SysDeptInfo">
+        update sys_user_info
+        <set>
+            <if test="password!=null and password!=''"><![CDATA[ password=#{password}, ]]></if>
+            <if test="email!=null and email!=''"><![CDATA[ email=#{email}, ]]></if>
+            <if test="phone!=null and phone!=''"><![CDATA[ phone=#{phone}, ]]></if>
+            <if test="userType!=null and userType!=''"><![CDATA[ user_type=#{userType}, ]]></if>
+            <if test="enableStatus!=null and enableStatus!=''"><![CDATA[ enable_status=#{enableStatus}, ]]></if>
+            <if test="isDeleted!=null and isDeleted!=''"><![CDATA[ is_deleted=#{isDeleted}, ]]></if>
+            <if test="updateTime!=null"><![CDATA[ update_time=#{updateTime}, ]]></if>
+            <if test="updator!=null and updator!=''"><![CDATA[ updator=#{updator}, ]]></if>
+        </set>
+    </update>
+
+    <select id="getById" resultMap="BaseResultMap">
+        select id, username, password, realname, phone, email, user_type, enable_status, is_deleted,
+               create_time, creator, update_time, updator
+          from sys_user_info
+         where id=#{id}
+    </select>
+
+    <select id="list" parameterType="QuerySysUserInfoVo" resultMap="BaseResultMap">
+        <![CDATA[
+        select id, username, password, realname, phone, email, user_type, enable_status, is_deleted,
+               create_time, creator, update_time, updator
+          from sys_user_info
+         where 1=1
+        ]]>
+        <if test="userType!=null and userType!=''"><![CDATA[ and user_type=#{userType} ]]></if>
+        <if test="enableStatus!=null and enableStatus!=''"><![CDATA[ and enable_status=#{enableStatus} ]]></if>
+        <if test="isDeleted!=null and isDeleted!=''"><![CDATA[ and is_deleted=#{isDeleted} ]]></if>
+        order by update_time desc
+        <if test="start!=null and offset!=null"><![CDATA[ limit #{start},#{offset}]]></if>
+    </select>
+
+    <select id="count" parameterType="QuerySysUserInfoVo" resultType="java.lang.Long">
+        select count(1) from sys_user_info where 1=1
+        <if test="userType!=null and userType!=''"><![CDATA[ and user_type=#{userType} ]]></if>
+        <if test="enableStatus!=null and enableStatus!=''"><![CDATA[ and enable_status=#{enableStatus} ]]></if>
+        <if test="isDeleted!=null and isDeleted!=''"><![CDATA[ and is_deleted=#{isDeleted} ]]></if>
+    </select>
+
+    <select id="getExistByName" resultMap="BaseResultMap">
+        <![CDATA[
+        select id, username, password, realname, phone, email, user_type, enable_status, is_deleted,
+               create_time, creator, update_time, updator
+          from sys_user_info
+         where 1=1
+        ]]>
+        <if test="id!=null"><![CDATA[ and id<>#{id}]]></if>
+        <if test="username!=null and username!=''"><![CDATA[ and username=#{username}]]></if>
+    </select>
+
+</mapper>
