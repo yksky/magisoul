@@ -1,6 +1,5 @@
 package org.magisoul.system.service.impl;
 
-import com.sun.org.apache.regexp.internal.RE;
 import org.magisoul.system.entity.SysDeptInfo;
 import org.magisoul.system.mapper.ISysDeptInfoMapper;
 import org.magisoul.system.model.dto.SysDeptInfoDto;
