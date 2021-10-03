@@ -1,9 +1,8 @@
-package org.magisoul.system.entity;
+package org.magisoul.system.model.dto;
 
-import java.io.Serializable;
 import java.util.Date;
 
-public class SysResourceInfo implements Serializable {
+public class SysResourceInfoDto {
 
     private Long id ;
     private String resourceName ;

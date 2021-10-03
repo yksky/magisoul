@@ -1,17 +1,12 @@
-package org.magisoul.system.entity;
+package org.magisoul.system.model.dto;
 
-import java.io.Serializable;
 import java.util.Date;
 
-public class SysResourceInfo implements Serializable {
+public class SysRoleInfoDto {
 
     private Long id ;
-    private String resourceName ;
-    private String resourceCode ;
-    private Integer level ;
-    private String type ;
-    private Long parentId ;
-    private String requestUrl ;
+    private String roleName ;
+    private String roleType ;
     private String enableStatus ;
     private String isDeleted ;
     private Date createTime ;
@@ -27,52 +22,20 @@ public class SysResourceInfo implements Serializable {
         this.id = id;
     }
 
-    public String getResourceName() {
-        return resourceName;
+    public String getRoleName() {
+        return roleName;
     }
 
-    public void setResourceName(String resourceName) {
-        this.resourceName = resourceName;
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 
-    public String getResourceCode() {
-        return resourceCode;
+    public String getRoleType() {
+        return roleType;
     }
 
-    public void setResourceCode(String resourceCode) {
-        this.resourceCode = resourceCode;
-    }
-
-    public Integer getLevel() {
-        return level;
-    }
-
-    public void setLevel(Integer level) {
-        this.level = level;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public Long getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(Long parentId) {
-        this.parentId = parentId;
-    }
-
-    public String getRequestUrl() {
-        return requestUrl;
-    }
-
-    public void setRequestUrl(String requestUrl) {
-        this.requestUrl = requestUrl;
+    public void setRoleType(String roleType) {
+        this.roleType = roleType;
     }
 
     public String getEnableStatus() {

@@ -65,6 +65,19 @@ public class ObjectUtil {
         return checkMap ;
     }
 
+    public static Boolean isEmpty(Object obj){
+        if(obj==null){
+            return true ;
+        }
+        if(obj instanceof String){
+            String str = String.valueOf(obj);
+            if(str.trim().equals("")){
+                return true ;
+            }
+        }
+        return false ;
+    }
+
     public static String getTraceId(){
         return UUID.randomUUID().toString().replace("-", "").toLowerCase();
     }
