@@ -2,12 +2,23 @@ package org.magisoul.system.model.query;
 
 import org.magisoul.util.model.QueryPageVo;
 
+import java.util.List;
+
 public class QuerySysRoleInfoVo extends QueryPageVo {
 
     private String roleName ;
     private String roleType ;
     private String enableStatus ;
     private String isDeleted ;
+    private List<Long> idsList ;
+
+    public List<Long> getIdsList() {
+        return idsList;
+    }
+
+    public void setIdsList(List<Long> idsList) {
+        this.idsList = idsList;
+    }
 
     public String getRoleName() {
         return roleName;

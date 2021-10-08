@@ -70,6 +70,7 @@
          where 1=1
         ]]>
         <if test="userType!=null and userType!=''"><![CDATA[ and user_type=#{userType} ]]></if>
+        <if test="username!=null and username!=''"><![CDATA[ and username=#{username} ]]></if>
         <if test="enableStatus!=null and enableStatus!=''"><![CDATA[ and enable_status=#{enableStatus} ]]></if>
         <if test="isDeleted!=null and isDeleted!=''"><![CDATA[ and is_deleted=#{isDeleted} ]]></if>
         order by update_time desc
@@ -79,6 +80,7 @@
     <select id="count" parameterType="QuerySysUserInfoVo" resultType="java.lang.Long">
         select count(1) from sys_user_info where 1=1
         <if test="userType!=null and userType!=''"><![CDATA[ and user_type=#{userType} ]]></if>
+        <if test="username!=null and username!=''"><![CDATA[ and username=#{username} ]]></if>
         <if test="enableStatus!=null and enableStatus!=''"><![CDATA[ and enable_status=#{enableStatus} ]]></if>
         <if test="isDeleted!=null and isDeleted!=''"><![CDATA[ and is_deleted=#{isDeleted} ]]></if>
     </select>
