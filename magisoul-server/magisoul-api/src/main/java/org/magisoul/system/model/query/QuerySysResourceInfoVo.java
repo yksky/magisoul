@@ -6,10 +6,19 @@ public class QuerySysResourceInfoVo extends QueryPageVo {
 
     private String resourceName ;
     private String resourceCode ;
+    private Integer level ;
     private String type ;
     private Long parentId ;
     private String enableStatus ;
     private String isDeleted ;
+
+    public Integer getLevel() {
+        return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
 
     public String getResourceName() {
         return resourceName;

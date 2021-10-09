@@ -53,6 +53,7 @@
             <if test="updateTime!=null"><![CDATA[ update_time=#{updateTime}, ]]></if>
             <if test="updator!=null and updator!=''"><![CDATA[ updator=#{updator}, ]]></if>
         </set>
+        where id=#{id}
     </update>
 
     <select id="getById" resultMap="BaseResultMap">

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.magisoul.system.mapper.ISysResourceInfoMapper">
+
+    <resultMap type="SysResourceInfo" id="BaseResultMap">
+        <result column="id" property="id"/>
+        <result column="resource_name" property="resourceName"/>
+        <result column="resource_code" property="resourceCode"/>
+        <result column="level" property="level"/>
+        <result column="type" property="type"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="request_url" property="requestUrl"/>
+        <result column="enable_status" property="enableStatus"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="create_time" property="createTime"/>
+        <result column="creator" property="creator"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="updator" property="updator"/>
+    </resultMap>
+
+    <insert id="add" parameterType="SysResourceInfo">
+    <![CDATA[
+        insert into sys_resource_info
+        (id, resource_name, resource_code, level, type, parent_id, request_url, enable_status, is_deleted, create_time, creator, update_time, updator)
+        values (#{id}, #{resourceName}, #{resourceCode}, #{level}, #{type}, #{parentId}, #{requestUrl}, #{enableStatus}, #{isDeleted},#{createTime}, #{creator}, #{updateTime}, #{updator})
+        ]]>
+    </insert>
+
+    <update id="updateForm" parameterType="SysResourceInfo">
+        update sys_resource_info
+        set resource_name=#{resourceName},
+            level=#{level},
+            type=#{type},
+            request_url=#{requestUrl},
+            enable_status=#{enableStatus},
+            update_time=#{updateTime},
+            updator=#{updator}
+        where id=#{id}
+    </update>
+
+    <update id="updateById" parameterType="SysResourceInfo">
+        update sys_resource_info
+        <set>
+            <if test="resourceName!=null and resourceName!=''"><![CDATA[ resource_name=#{resourceName}, ]]></if>
+            <if test="level!=null"><![CDATA[ level=#{level}, ]]></if>
+            <if test="type!=null and type!=''"><![CDATA[ type=#{type}, ]]></if>
+            <if test="requestUrl!=null and requestUrl!=''"><![CDATA[ request_url=#{requestUrl}, ]]></if>
+            <if test="enableStatus!=null and enableStatus!=''"><![CDATA[ enable_status=#{enableStatus}, ]]></if>
+            <if test="isDeleted!=null and isDeleted!=''"><![CDATA[ is_deleted=#{isDeleted}, ]]></if>
+            <if test="updateTime!=null"><![CDATA[ update_time=#{updateTime}, ]]></if>
+            <if test="updator!=null and updator!=''"><![CDATA[ updator=#{updator}, ]]></if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <select id="getById" resultMap="BaseResultMap">
+        select id, resource_name, resource_code, level, type, parent_id, request_url, enable_status, is_deleted, create_time, creator, update_time, updator
+        from sys_resource_info
+        where id=#{id}
+    </select>
+
+    <select id="list" parameterType="QuerySysResourceInfoVo" resultMap="BaseResultMap">
+        <![CDATA[
+        select id, resource_name, resource_code, level, type, parent_id, request_url, enable_status, is_deleted, create_time, creator, update_time, updator
+        from sys_resource_info
+         where 1=1
+        ]]>
+        <if test="resourceName!=null and resourceName!=''"><![CDATA[ and resource_name=#{resourceName} ]]></if>
+        <if test="resourceCode!=null and resourceCode!=''"><![CDATA[ and resource_code=#{resourceCode} ]]></if>
+        <if test="type!=null and type!=''"><![CDATA[ and type=#{type} ]]></if>
+        <if test="level!=null"><![CDATA[ and level=#{level} ]]></if>
+        <if test="parentId!=null"><![CDATA[ and parent_id=#{parentId} ]]></if>
+        <if test="enableStatus!=null and enableStatus!=''"><![CDATA[ and enable_status=#{enableStatus} ]]></if>
+        <if test="isDeleted!=null and isDeleted!=''"><![CDATA[ and is_deleted=#{isDeleted} ]]></if>
+        order by update_time desc
+        <if test="start!=null and offset!=null"><![CDATA[ limit #{start},#{offset}]]></if>
+    </select>
+
+    <select id="count" parameterType="QuerySysResourceInfoVo" resultType="java.lang.Long">
+        select count(1) from sys_resource_info where 1=1
+        <if test="resourceName!=null and resourceName!=''"><![CDATA[ and resource_name=#{resourceName} ]]></if>
+        <if test="resourceCode!=null and resourceCode!=''"><![CDATA[ and resource_code=#{resourceCode} ]]></if>
+        <if test="type!=null and type!=''"><![CDATA[ and type=#{type} ]]></if>
+        <if test="level!=null"><![CDATA[ and level=#{level} ]]></if>
+        <if test="parentId!=null"><![CDATA[ and parent_id=#{parentId} ]]></if>
+        <if test="enableStatus!=null and enableStatus!=''"><![CDATA[ and enable_status=#{enableStatus} ]]></if>
+        <if test="isDeleted!=null and isDeleted!=''"><![CDATA[ and is_deleted=#{isDeleted} ]]></if>
+    </select>
+
+    <select id="getExistByName" resultMap="BaseResultMap">
+        <![CDATA[
+        select id, resource_name, resource_code, level, type, parent_id, request_url, enable_status, is_deleted, create_time, creator, update_time, updator
+        from sys_resource_info
+         where 1=1
+        ]]>
+        <if test="id!=null"><![CDATA[ and id<>#{id}]]></if>
+        <if test="resourceName!=null and resourceName!=''"><![CDATA[ and resource_name=#{resourceName} ]]></if>
+    </select>
+
+</mapper>

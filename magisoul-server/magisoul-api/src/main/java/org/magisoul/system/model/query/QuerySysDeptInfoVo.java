@@ -9,6 +9,24 @@ public class QuerySysDeptInfoVo extends QueryPageVo{
 	private Long parentId ;
 	private String enableStatus ;
 	private String isDeleted ;
+	private Integer level ;
+	private String deptName ;
+
+	public Integer getLevel() {
+		return level;
+	}
+
+	public void setLevel(Integer level) {
+		this.level = level;
+	}
+
+	public String getDeptName() {
+		return deptName;
+	}
+
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
+	}
 
 	public Long getParentId() {
 		return parentId;

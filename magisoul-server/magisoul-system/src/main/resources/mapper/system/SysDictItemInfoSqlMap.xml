@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.magisoul.system.mapper.ISysDictInfoMapper">
+
+    <resultMap type="SysDictItemInfo" id="BaseResultMap">
+        <result column="id" property="id"/>
+        <result column="dict_type" property="dictType"/>
+        <result column="item_name" property="itemName"/>
+        <result column="item_value" property="itemValue"/>
+        <result column="sort" property="sort"/>
+        <result column="enable_status" property="enableStatus"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="create_time" property="createTime"/>
+        <result column="creator" property="creator"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="updator" property="updator"/>
+    </resultMap>
+
+    <insert id="add" parameterType="SysDictItemInfo">
+    <![CDATA[
+        insert into sys_dict_item_info
+        (id, dict_type, item_name, item_value, sort, enable_status, is_deleted, create_time, creator, update_time, updator)
+        values (#{id}, #{dictType}, #{itemName}, #{itemValue}, #{sort}, #{enableStatus}, #{isDeleted},#{createTime}, #{creator}, #{updateTime}, #{updator})
+    ]]>
+    </insert>
+
+    <update id="updateForm" parameterType="SysDictItemInfo">
+        update sys_dict_item_info
+        set dict_type=#{dictType},
+            item_name=#{itemName},
+            item_value=#{itemValue},
+            sort=#{sort},
+            enable_status=#{enableStatus},
+            update_time=#{updateTime},
+            updator=#{updator}
+        where id=#{id}
+    </update>
+
+    <update id="updateById" parameterType="SysDictItemInfo">
+        update sys_dict_item_info
+        <set>
+            <if test="dictType!=null and dictType!=''"><![CDATA[ dict_type=#{dictType}, ]]></if>
+            <if test="itemName!=null and itemName!=''"><![CDATA[ item_name=#{itemName}, ]]></if>
+            <if test="itemValue!=null and itemValue!=''"><![CDATA[ item_value=#{itemValue}, ]]></if>
+            <if test="sort!=null"><![CDATA[ sort=#{sort}, ]]></if>
+            <if test="enableStatus!=null and enableStatus!=''"><![CDATA[ enable_status=#{enableStatus}, ]]></if>
+            <if test="isDeleted!=null and isDeleted!=''"><![CDATA[ is_deleted=#{isDeleted}, ]]></if>
+            <if test="updateTime!=null"><![CDATA[ update_time=#{updateTime}, ]]></if>
+            <if test="updator!=null and updator!=''"><![CDATA[ updator=#{updator}, ]]></if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <select id="getById" resultMap="BaseResultMap">
+        select id, dict_type, item_name, item_value, sort, enable_status, is_deleted, create_time, creator, update_time, updator
+          from sys_dict_item_info
+         where id=#{id}
+    </select>
+
+    <select id="list" parameterType="QuerySysDictItemInfoVo" resultMap="BaseResultMap">
+        <![CDATA[
+        select id, dict_type, item_name, item_value, sort, enable_status, is_deleted, create_time, creator, update_time, updator
+          from sys_dict_item_info
+         where 1=1
+        ]]>
+        <if test="dictType!=null and dictType!=''"><![CDATA[ and dict_type=#{dictType} ]]></if>
+        <if test="itemName!=null and itemName!=''"><![CDATA[ and item_name=#{itemName} ]]></if>
+        <if test="itemValue!=null and itemValue!=''"><![CDATA[ and item_value=#{itemValue} ]]></if>
+        <if test="enableStatus!=null and enableStatus!=''"><![CDATA[ and enable_status=#{enableStatus} ]]></if>
+        <if test="isDeleted!=null and isDeleted!=''"><![CDATA[ and is_deleted=#{isDeleted} ]]></if>
+        order by update_time desc
+        <if test="start!=null and offset!=null"><![CDATA[ limit #{start},#{offset}]]></if>
+    </select>
+
+    <select id="count" parameterType="QuerySysDictItemInfoVo" resultType="java.lang.Long">
+        select count(1) from sys_dict_item_info where 1=1
+        <if test="dictType!=null and dictType!=''"><![CDATA[ and dict_type=#{dictType} ]]></if>
+        <if test="itemName!=null and itemName!=''"><![CDATA[ and item_name=#{itemName} ]]></if>
+        <if test="itemValue!=null and itemValue!=''"><![CDATA[ and item_value=#{itemValue} ]]></if>
+        <if test="enableStatus!=null and enableStatus!=''"><![CDATA[ and enable_status=#{enableStatus} ]]></if>
+        <if test="isDeleted!=null and isDeleted!=''"><![CDATA[ and is_deleted=#{isDeleted} ]]></if>
+    </select>
+
+    <select id="getExistByName" resultMap="BaseResultMap">
+        <![CDATA[
+        select id, dict_type, item_name, item_value, sort, enable_status, is_deleted, create_time, creator, update_time, updator
+          from sys_dict_item_info
+         where 1=1
+        ]]>
+        <if test="id!=null"><![CDATA[ and id<>#{id}]]></if>
+        <if test="itemName!=null and itemName!=''"><![CDATA[ and item_name=#{itemName} ]]></if>
+    </select>
+
+</mapper>

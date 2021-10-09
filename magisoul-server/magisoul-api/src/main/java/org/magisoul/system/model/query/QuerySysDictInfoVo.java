@@ -4,9 +4,18 @@ import org.magisoul.util.model.QueryPageVo;
 
 public class QuerySysDictInfoVo extends QueryPageVo {
 
+    private String dictName ;
     private String dictType ;
     private String enableStatus ;
     private String isDeleted ;
+
+    public String getDictName() {
+        return dictName;
+    }
+
+    public void setDictName(String dictName) {
+        this.dictName = dictName;
+    }
 
     public String getDictType() {
         return dictType;
