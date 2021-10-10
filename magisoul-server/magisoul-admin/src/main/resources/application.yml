@@ -16,7 +16,7 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/magisoul?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC
+    url: jdbc:mysql://192.168.50.68:3306/magisoul?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC
     username: root
     password: yg123456
     druid:
@@ -29,7 +29,7 @@ spring:
       time-between-eviction-runs-millis: 60000
       min-evictable-idle-time-millis: 300000
   redis:
-    host: localhost
+    host: 192.168.50.68
     port: 6379
     timeout: 10000ms
     database: 0
@@ -40,7 +40,7 @@ spring:
         min-idle: 0
         max-wait: -1
 
-mybatis:
-  type-aliases-package: org.magisoul.**.entity
-  mapper-locations: classpath*:mapper/**/*SqlMap.xml
-  config-location: classpath:mybatis/mybatis-config.xml
+#mybatis:
+  #type-aliases-package: org.magisoul.**.entity
+  #mapper-locations: classpath*:mapper/**/*SqlMap.xml
+  #config-location: classpath:mybatis/mybatis-config.xml

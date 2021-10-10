@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.magisoul.system.mapper.ISysUserRoleRpMapper">
+<mapper namespace="org.magisoul.system.mapper.ISysUserDeptRpMapper">
 
-    <resultMap type="SysUserRoleRp" id="BaseResultMap">
+    <resultMap type="SysUserDeptRp" id="BaseResultMap">
         <result column="user_id" property="userId"/>
-        <result column="role_id" property="roleId"/>
+        <result column="dept_id" property="deptId"/>
     </resultMap>
 
-    <insert id="add" parameterType="SysUserRoleRp">
+    <insert id="add" parameterType="SysUserDeptRp">
     <![CDATA[
-        insert into sys_user_role_rp
-        (user_id, role_id)
-        values (#{userId}, #{roleId})
+        insert into sys_user_dept_rp
+        (user_id, dept_id)
+        values (#{userId}, #{deptId})
         ]]>
     </insert>
 
-    <delete id="delete" parameterType="SysUserRoleRp">
+    <delete id="delete" parameterType="SysUserDeptRp">
         delete from sys_user_role_rp where 1=1
         <if test="userId!=null"><![CDATA[ and user_id=#{userId} ]]></if>
-        <if test="roleId!=null"><![CDATA[ and role_id=#{roleId} ]]></if>
+        <if test="deptId!=null"><![CDATA[ and dept_id=#{deptId} ]]></if>
     </delete>
 
     <select id="list" resultMap="BaseResultMap">
         <![CDATA[
-         select user_id,role_id
-         from sys_user_role_rp
+         select user_id,dept_id
+         from sys_user_dept_rp
          where 1=1
         ]]>
         <if test="userId!=null"><![CDATA[ and user_id=#{userId} ]]></if>
-        <if test="roleId!=null"><![CDATA[ and role_id=#{roleId} ]]></if>
+        <if test="deptId!=null"><![CDATA[ and dept_id=#{deptId} ]]></if>
     </select>
 
 </mapper>

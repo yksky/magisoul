@@ -3,7 +3,6 @@ package org.magisoul.system.service.impl;
 import org.magisoul.system.entity.SysDeptInfo;
 import org.magisoul.system.mapper.ISysDeptInfoMapper;
 import org.magisoul.system.model.dto.SysDeptInfoDto;
-import org.magisoul.system.model.dto.SysUserInfoDto;
 import org.magisoul.system.model.query.QuerySysDeptInfoVo;
 import org.magisoul.system.service.ISysDeptInfoService;
 import org.magisoul.util.CheckUtil;

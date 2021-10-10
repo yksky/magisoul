@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <properties>
+        <property name="dialect" value="MYSQL"/>
+    </properties>
+    <typeAliases>
+        <typeAlias alias="SysDeptInfo" type="org.magisoul.system.entity.SysDeptInfo"/>
+        <typeAlias alias="SysDictInfo" type="org.magisoul.system.entity.SysDictInfo"/>
+        <typeAlias alias="SysDictItemInfo" type="org.magisoul.system.entity.SysDictItemInfo"/>
+        <typeAlias alias="SysResourceInfo" type="org.magisoul.system.entity.SysResourceInfo"/>
+        <typeAlias alias="SysRoleInfo" type="org.magisoul.system.entity.SysRoleInfo"/>
+        <typeAlias alias="SysUserDeptRp" type="org.magisoul.system.entity.SysUserDeptRp"/>
+        <typeAlias alias="SysUserInfo" type="org.magisoul.system.entity.SysUserInfo"/>
+        <typeAlias alias="SysUserRoleRp" type="org.magisoul.system.entity.SysUserRoleRp"/>
+
+        <typeAlias alias="QuerySysDeptInfoVo" type="org.magisoul.system.model.query.QuerySysDeptInfoVo"/>
+        <typeAlias alias="QuerySysDictInfoVo" type="org.magisoul.system.model.query.QuerySysDictInfoVo"/>
+        <typeAlias alias="QuerySysDictItemInfoVo" type="org.magisoul.system.model.query.QuerySysDictItemInfoVo"/>
+        <typeAlias alias="QuerySysResourceInfoVo" type="org.magisoul.system.model.query.QuerySysResourceInfoVo"/>
+        <typeAlias alias="QuerySysRoleInfoVo" type="org.magisoul.system.model.query.QuerySysRoleInfoVo"/>
+        <typeAlias alias="QuerySysUserInfoVo" type="org.magisoul.system.model.query.QuerySysUserInfoVo"/>
+    </typeAliases>
+</configuration>
