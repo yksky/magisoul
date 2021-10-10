@@ -1,11 +1,14 @@
 package org.magisoul.system.api.impl;
 
+import com.alibaba.fastjson.JSON;
 import org.magisoul.system.api.ISysUserInfoApi;
 import org.magisoul.system.model.dto.SysUserInfoDto;
 import org.magisoul.system.model.query.QuerySysUserInfoVo;
 import org.magisoul.system.service.ISysUserInfoService;
 import org.magisoul.util.model.Pagination;
 import org.magisoul.util.model.RespData;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +20,8 @@ public class SysUserInfoApiImpl implements ISysUserInfoApi {
     @Autowired
     private ISysUserInfoService sysUserInfoService ;
 
+    Logger logger = LoggerFactory.getLogger(SysUserInfoApiImpl.class);
+
     /**
      * 页面表单的编辑功能(这里合并新增以及修改)
      *
@@ -25,7 +30,21 @@ public class SysUserInfoApiImpl implements ISysUserInfoApi {
      */
     @Override
     public RespData<String> mergeForm(SysUserInfoDto sysUserInfoDto) {
-        return null;
+        RespData<String> resp = new RespData<>();
+        try{
+            if(sysUserInfoDto.getId()==null){
+                resp = this.sysUserInfoService.add(sysUserInfoDto);
+            }else{
+                resp = this.sysUserInfoService.updateForm(sysUserInfoDto);
+            }
+            logger.info("类名:{},方法名:{},参数:[sysUserInfoDto:{}],编辑用户信息正常,结果信息:{}",
+                    "SysUserInfoApiImpl","mergeForm", JSON.toJSONString(sysUserInfoDto),JSON.toJSONString(resp));
+        }catch(Exception e){
+            logger.error("类名:{},方法名:{},参数:[sysUserInfoDto:{}],编辑用户信息异常,异常信息:{}",
+                    "SysUserInfoApiImpl","mergeForm", JSON.toJSONString(sysUserInfoDto),e);
+            resp.buildFail("编辑用户信息失败");
+        }
+        return resp;
     }
 
     /**
@@ -36,7 +55,17 @@ public class SysUserInfoApiImpl implements ISysUserInfoApi {
      */
     @Override
     public RespData<String> updateById(SysUserInfoDto sysUserInfoDto) {
-        return null;
+        RespData<String> resp = new RespData<>();
+        try{
+            resp = this.sysUserInfoService.updateById(sysUserInfoDto);
+            logger.info("类名:{},方法名:{},参数:[sysUserInfoDto:{}],根据Id更新用户信息正常,结果信息:{}",
+                    "SysUserInfoApiImpl","updateById", JSON.toJSONString(sysUserInfoDto),JSON.toJSONString(resp));
+        }catch(Exception e){
+            logger.error("类名:{},方法名:{},参数:[sysUserInfoDto:{}],根据Id更新用户信息异常,异常信息:{}",
+                    "SysUserInfoApiImpl","updateById", JSON.toJSONString(sysUserInfoDto),e);
+            resp.buildFail("根据Id更新用户信息失败");
+        }
+        return resp;
     }
 
     /**
@@ -47,7 +76,17 @@ public class SysUserInfoApiImpl implements ISysUserInfoApi {
      */
     @Override
     public RespData<SysUserInfoDto> getById(Long id) {
-        return null;
+        RespData<SysUserInfoDto> resp = new RespData<>();
+        try{
+            resp = this.sysUserInfoService.getById(id);
+            logger.info("类名:{},方法名:{},参数:[id:{}],根据Id获取用户信息正常,结果信息:{}",
+                    "SysUserInfoApiImpl","getById", id, JSON.toJSONString(resp));
+        }catch(Exception e){
+            logger.error("类名:{},方法名:{},参数:[id:{}],根据Id获取用户信息异常,异常信息:{}",
+                    "SysUserInfoApiImpl","getById", id, e);
+            resp.buildFail("根据Id获取用户信息失败");
+        }
+        return resp;
     }
 
     /**
@@ -58,7 +97,17 @@ public class SysUserInfoApiImpl implements ISysUserInfoApi {
      */
     @Override
     public RespData<List<SysUserInfoDto>> list(QuerySysUserInfoVo querySysUserInfoVo) {
-        return null;
+        RespData<List<SysUserInfoDto>> resp = new RespData<>();
+        try{
+            resp = this.sysUserInfoService.list(querySysUserInfoVo);
+            logger.info("类名:{},方法名:{},参数:[querySysUserInfoVo:{}],根据条件获取用户不分页列表信息正常,结果信息:{}",
+                    "SysUserInfoApiImpl","list", JSON.toJSONString(querySysUserInfoVo), JSON.toJSONString(resp));
+        }catch(Exception e){
+            logger.error("类名:{},方法名:{},参数:[querySysUserInfoVo:{}],根据条件获取用户不分页列表信息异常,异常信息:{}",
+                    "SysUserInfoApiImpl","list", JSON.toJSONString(querySysUserInfoVo), e);
+            resp.buildFail("根据条件获取不分页用户信息失败");
+        }
+        return resp;
     }
 
     /**
@@ -69,7 +118,17 @@ public class SysUserInfoApiImpl implements ISysUserInfoApi {
      */
     @Override
     public RespData<Pagination<SysUserInfoDto>> pageList(QuerySysUserInfoVo querySysUserInfoVo) {
-        return null;
+        RespData<Pagination<SysUserInfoDto>> resp = new RespData<>();
+        try{
+            resp = this.sysUserInfoService.pageList(querySysUserInfoVo);
+            logger.info("类名:{},方法名:{},参数:[querySysUserInfoVo:{}],根据条件获取用户分页列表信息正常,结果信息:{}",
+                    "SysUserInfoApiImpl","pageList", JSON.toJSONString(querySysUserInfoVo), JSON.toJSONString(resp));
+        }catch(Exception e){
+            logger.error("类名:{},方法名:{},参数:[querySysUserInfoVo:{}],根据条件获取用户分页列表信息异常,异常信息:{}",
+                    "SysUserInfoApiImpl","pageList", JSON.toJSONString(querySysUserInfoVo), e);
+            resp.buildFail("根据条件获取分页用户信息失败");
+        }
+        return resp;
     }
 
     /**

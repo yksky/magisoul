@@ -1,4 +1,4 @@
-package org.magisoul.system.service;
+package org.magisoul.system.api;
 
 import org.magisoul.system.model.dto.SysResourceInfoDto;
 import org.magisoul.system.model.query.QuerySysResourceInfoVo;
@@ -7,11 +7,9 @@ import org.magisoul.util.model.RespData;
 
 import java.util.List;
 
-public interface ISysResourceInfoService {
+public interface ISysResourceInfoApi {
 
-    public RespData<String> add(SysResourceInfoDto sysResourceInfoDto);
-
-    public RespData<String> updateForm(SysResourceInfoDto sysResourceInfoDto);
+    public RespData<String> mergeForm(SysResourceInfoDto sysResourceInfoDto);
 
     public RespData<String> updateById(SysResourceInfoDto sysResourceInfoDto);
 

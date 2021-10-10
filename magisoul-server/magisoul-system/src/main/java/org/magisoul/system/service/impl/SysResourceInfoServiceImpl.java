@@ -13,6 +13,7 @@ import org.magisoul.util.enums.RespCodeEnum;
 import org.magisoul.util.model.CheckParamVo;
 import org.magisoul.util.model.Pagination;
 import org.magisoul.util.model.RespData;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ import java.util.Map;
 @Service("sysResourceInfoService")
 public class SysResourceInfoServiceImpl implements ISysResourceInfoService {
 
+    @Autowired
     private ISysResourceInfoMapper sysResourceInfoMapper ;
 
     @Override
@@ -121,6 +123,78 @@ public class SysResourceInfoServiceImpl implements ISysResourceInfoService {
         Pagination<SysResourceInfoDto> data = new Pagination<>(querySysResourceInfoVo.getPageNo(),querySysResourceInfoVo.getPageSize(),count,dtoList);
 
         return resp.buildSuccess(data);
+    }
+
+    @Override
+    public RespData<String> enable(SysResourceInfoDto sysResourceInfoDto) {
+        RespData<String> resp = new RespData<>();
+
+        RespData<SysResourceInfo> check = this.checkById(sysResourceInfoDto.getId());
+        if(!check.isSuccess()){
+            resp.clone(check);
+            return resp ;
+        }
+
+        SysResourceInfo data = check.getData();
+        if(data.getEnableStatus().trim().equals("enable")){
+            resp.build(RespCodeEnum.ENABLE_STATUS);
+            return resp ;
+        }
+
+        SysResourceInfo updateVo = new SysResourceInfo();
+        updateVo.setId(data.getId());
+        updateVo.setEnableStatus("enable");
+        updateVo.setUpdateTime(new Date(System.currentTimeMillis()));
+        updateVo.setUpdator(sysResourceInfoDto.getUpdator());
+
+        Integer affectRowNum = this.sysResourceInfoMapper.updateById(updateVo);
+        return resp.getByAffectRowNum(affectRowNum);
+    }
+
+    @Override
+    public RespData<String> disable(SysResourceInfoDto sysResourceInfoDto) {
+        RespData<String> resp = new RespData<>();
+
+        RespData<SysResourceInfo> check = this.checkById(sysResourceInfoDto.getId());
+        if(!check.isSuccess()){
+            resp.clone(check);
+            return resp ;
+        }
+
+        SysResourceInfo data = check.getData();
+        if(data.getEnableStatus().trim().equals("disable")){
+            resp.build(RespCodeEnum.DISABLE_STATUS);
+            return resp ;
+        }
+
+        SysResourceInfo updateVo = new SysResourceInfo();
+        updateVo.setId(data.getId());
+        updateVo.setEnableStatus("disable");
+        updateVo.setUpdateTime(new Date(System.currentTimeMillis()));
+        updateVo.setUpdator(sysResourceInfoDto.getUpdator());
+
+        Integer affectRowNum = this.sysResourceInfoMapper.updateById(updateVo);
+        return resp.getByAffectRowNum(affectRowNum);
+    }
+
+    @Override
+    public RespData<String> deleteById(SysResourceInfoDto sysResourceInfoDto) {
+        RespData<String> resp = new RespData<>();
+
+        RespData<SysResourceInfo> check = this.checkById(sysResourceInfoDto.getId());
+        if(!check.isSuccess()){
+            resp.clone(check);
+            return resp ;
+        }
+
+        SysResourceInfo updateVo = new SysResourceInfo();
+        updateVo.setId(sysResourceInfoDto.getId());
+        updateVo.setIsDeleted("Y");
+        updateVo.setUpdateTime(new Date(System.currentTimeMillis()));
+        updateVo.setUpdator(sysResourceInfoDto.getUpdator());
+
+        Integer affectRowNum = this.sysResourceInfoMapper.updateById(updateVo);
+        return resp.getByAffectRowNum(affectRowNum);
     }
 
     private List<SysResourceInfoDto> transferList(List<SysResourceInfo> dataList){

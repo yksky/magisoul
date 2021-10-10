@@ -117,6 +117,78 @@ public class SysDictItemInfoServiceImpl implements ISysDictItemInfoService {
         return resp.buildSuccess(data);
     }
 
+    @Override
+    public RespData<String> enable(SysDictItemInfoDto sysDictItemInfoDto) {
+        RespData<String> resp = new RespData<>();
+
+        RespData<SysDictItemInfo> check = this.checkById(sysDictItemInfoDto.getId());
+        if(!check.isSuccess()){
+            resp.clone(check);
+            return resp ;
+        }
+
+        SysDictItemInfo data = check.getData();
+        if(data.getEnableStatus().trim().equals("enable")){
+            resp.build(RespCodeEnum.ENABLE_STATUS);
+            return resp ;
+        }
+
+        SysDictItemInfo updateVo = new SysDictItemInfo();
+        updateVo.setId(data.getId());
+        updateVo.setEnableStatus("enable");
+        updateVo.setUpdateTime(new Date(System.currentTimeMillis()));
+        updateVo.setUpdator(sysDictItemInfoDto.getUpdator());
+
+        Integer affectRowNum = this.sysDictItemInfoMapper.updateById(updateVo);
+        return resp.getByAffectRowNum(affectRowNum);
+    }
+
+    @Override
+    public RespData<String> disable(SysDictItemInfoDto sysDictItemInfoDto) {
+        RespData<String> resp = new RespData<>();
+
+        RespData<SysDictItemInfo> check = this.checkById(sysDictItemInfoDto.getId());
+        if(!check.isSuccess()){
+            resp.clone(check);
+            return resp ;
+        }
+
+        SysDictItemInfo data = check.getData();
+        if(data.getEnableStatus().trim().equals("disable")){
+            resp.build(RespCodeEnum.DISABLE_STATUS);
+            return resp ;
+        }
+
+        SysDictItemInfo updateVo = new SysDictItemInfo();
+        updateVo.setId(data.getId());
+        updateVo.setEnableStatus("disable");
+        updateVo.setUpdateTime(new Date(System.currentTimeMillis()));
+        updateVo.setUpdator(sysDictItemInfoDto.getUpdator());
+
+        Integer affectRowNum = this.sysDictItemInfoMapper.updateById(updateVo);
+        return resp.getByAffectRowNum(affectRowNum);
+    }
+
+    @Override
+    public RespData<String> deleteById(SysDictItemInfoDto sysDictItemInfoDto) {
+        RespData<String> resp = new RespData<>();
+
+        RespData<SysDictItemInfo> check = this.checkById(sysDictItemInfoDto.getId());
+        if(!check.isSuccess()){
+            resp.clone(check);
+            return resp ;
+        }
+
+        SysDictItemInfo updateVo = new SysDictItemInfo();
+        updateVo.setUpdator(sysDictItemInfoDto.getUpdator());
+        updateVo.setUpdateTime(new Date(System.currentTimeMillis()));
+        updateVo.setId(sysDictItemInfoDto.getId());
+        updateVo.setIsDeleted("Y");
+
+        Integer affectRowNum = this.sysDictItemInfoMapper.updateById(updateVo);
+        return resp.getByAffectRowNum(affectRowNum);
+    }
+
     private List<SysDictItemInfoDto> transferList(List<SysDictItemInfo> dataList){
         List<SysDictItemInfoDto> dtoList = new ArrayList<>();
 

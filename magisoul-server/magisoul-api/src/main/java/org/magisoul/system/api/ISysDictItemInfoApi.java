@@ -1,4 +1,4 @@
-package org.magisoul.system.service;
+package org.magisoul.system.api;
 
 import org.magisoul.system.model.dto.SysDictItemInfoDto;
 import org.magisoul.system.model.query.QuerySysDictItemInfoVo;
@@ -7,11 +7,9 @@ import org.magisoul.util.model.RespData;
 
 import java.util.List;
 
-public interface ISysDictItemInfoService {
+public interface ISysDictItemInfoApi {
 
-    public RespData<String> add(SysDictItemInfoDto sysDictItemInfoDto);
-
-    public RespData<String> updateForm(SysDictItemInfoDto sysDictItemInfoDto);
+    public RespData<String> mergeForm(SysDictItemInfoDto sysDictItemInfoDto);
 
     public RespData<String> updateById(SysDictItemInfoDto sysDictItemInfoDto);
 
