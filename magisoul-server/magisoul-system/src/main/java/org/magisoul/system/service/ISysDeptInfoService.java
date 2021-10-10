@@ -22,4 +22,10 @@ public interface ISysDeptInfoService {
 
     public RespData<Pagination<SysDeptInfoDto>> pageList(QuerySysDeptInfoVo querySysDeptInfoVo);
 
+    public RespData<String> enable(SysDeptInfoDto sysDeptInfoDto);
+
+    public RespData<String> disable(SysDeptInfoDto sysDeptInfoDto);
+
+    public RespData<String> deleteById(SysDeptInfoDto sysDeptInfoDto);
+
 }

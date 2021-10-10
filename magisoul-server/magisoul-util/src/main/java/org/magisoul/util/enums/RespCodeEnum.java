@@ -47,7 +47,11 @@ public enum RespCodeEnum {
     //申请状态
     IN_APPLY_STATUS("2001","申请中"),
     PASS_APPLY_STATUS("2002","申请通过"),
-    NOT_PASS_APPLY_STATUS("2003","申请没有通过");
+    NOT_PASS_APPLY_STATUS("2003","申请没有通过"),
+
+    //使用状态
+    ENABLE_STATUS("2101","该记录目前状态为使用中,不能被重复更新成使用中,请重新输入"),
+    DISABLE_STATUS("2102","该记录目前状态为禁用,不能再次被禁用,请重新输入");
 
 
     private String code ;

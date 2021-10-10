@@ -57,6 +57,18 @@ public class RespData<T> implements Serializable {
         return this ;
     }
 
+    public RespData buildFail(String message){
+        this.setCode(RespCodeEnum.FAIL.getCode());
+        this.setMessage(message);
+        return this ;
+    }
+
+    public RespData buildError(String message){
+        this.setCode(RespCodeEnum.ERROR.getCode());
+        this.setMessage(message);
+        return this ;
+    }
+
     public RespData buildSuccess(){
         this.setCode(RespCodeEnum.SUCCESS.getCode());
         this.setMessage(RespCodeEnum.SUCCESS.getMessage());

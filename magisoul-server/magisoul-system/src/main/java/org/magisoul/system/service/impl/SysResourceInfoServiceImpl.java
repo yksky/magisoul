@@ -8,6 +8,7 @@ import org.magisoul.system.service.ISysResourceInfoService;
 import org.magisoul.util.CheckUtil;
 import org.magisoul.util.Dto2Entity;
 import org.magisoul.util.ObjectUtil;
+import org.magisoul.util.SnowflakeIdUtil;
 import org.magisoul.util.enums.RespCodeEnum;
 import org.magisoul.util.model.CheckParamVo;
 import org.magisoul.util.model.Pagination;
@@ -37,8 +38,9 @@ public class SysResourceInfoServiceImpl implements ISysResourceInfoService {
 
         //执行添加操作,返回受影响的记录行数
         SysResourceInfo data = checkForm.getData();
-        Integer affectRowNum = this.sysResourceInfoMapper.add(data);
+        data.setId(new SnowflakeIdUtil(0,0).nextId());
 
+        Integer affectRowNum = this.sysResourceInfoMapper.add(data);
         return resp.getByAffectRowNum(affectRowNum);
     }
 
@@ -173,6 +175,7 @@ public class SysResourceInfoServiceImpl implements ISysResourceInfoService {
         data.setEnableStatus(enableStatus);
         data.setType(type);
         data.setParentId(parentId);
+        data.setIsDeleted("N");
         if(!ObjectUtil.isEmpty(type)){
             data.setRequestUrl(requestUrl);
         }

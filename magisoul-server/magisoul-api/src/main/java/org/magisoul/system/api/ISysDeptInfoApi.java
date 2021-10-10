@@ -13,7 +13,7 @@ public interface ISysDeptInfoApi {
 	
 	public RespData<String> updateById(SysDeptInfoDto sysDeptInfoDto);
 	
-	public RespData<SysDeptInfoDto> getById(SysDeptInfoDto sysDeptInfoDto);
+	public RespData<SysDeptInfoDto> getById(Long id);
 
 	public RespData<List<SysDeptInfoDto>> list(QuerySysDeptInfoVo querySysDeptInfoVo);
 
@@ -23,6 +23,6 @@ public interface ISysDeptInfoApi {
 
 	public RespData<String> disable(SysDeptInfoDto sysDeptInfoDto);
 
-	public RespData<String> deleteById(Long id);
+	public RespData<String> deleteById(SysDeptInfoDto sysDeptInfoDto);
 
 }

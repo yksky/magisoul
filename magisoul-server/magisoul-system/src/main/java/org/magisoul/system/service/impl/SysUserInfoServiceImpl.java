@@ -5,16 +5,20 @@ import org.magisoul.system.mapper.ISysUserInfoMapper;
 import org.magisoul.system.model.dto.SysUserInfoDto;
 import org.magisoul.system.model.query.QuerySysUserInfoVo;
 import org.magisoul.system.service.ISysUserInfoService;
+import org.magisoul.util.CheckUtil;
 import org.magisoul.util.Dto2Entity;
+import org.magisoul.util.SnowflakeIdUtil;
 import org.magisoul.util.enums.RespCodeEnum;
+import org.magisoul.util.model.CheckParamVo;
 import org.magisoul.util.model.Pagination;
 import org.magisoul.util.model.RespData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.xml.ws.soap.Addressing;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Service("sysUserInfoService")
 public class SysUserInfoServiceImpl implements ISysUserInfoService {
@@ -24,19 +28,52 @@ public class SysUserInfoServiceImpl implements ISysUserInfoService {
 
     @Override
     public RespData<String> add(SysUserInfoDto sysUserInfoDto) {
-        return null;
+        RespData<String> resp = new RespData<>();
+
+        //检查表单
+        RespData<SysUserInfo> checkForm = this.checkForm(sysUserInfoDto);
+        if(!checkForm.isSuccess()){
+            resp.clone(checkForm);
+            return resp ;
+        }
+
+        SysUserInfo data = checkForm.getData();
+        data.setId(new SnowflakeIdUtil(0,0).nextId());
+        //设置密码 todo
+
+        Integer affectRowNum = this.sysUserInfoMapper.add(data);
+        return resp.getByAffectRowNum(affectRowNum);
     }
 
     @Override
     public RespData<String> updateForm(SysUserInfoDto sysUserInfoDto) {
-        return null;
+        RespData<String> resp = new RespData<>();
+
+        //检查表单
+        RespData<SysUserInfo> checkForm = this.checkForm(sysUserInfoDto);
+        if(!checkForm.isSuccess()){
+            resp.clone(checkForm);
+            return resp ;
+        }
+
+        SysUserInfo data = checkForm.getData();
+
+        //检查Id
+        RespData<SysUserInfo> check = this.checkById(data.getId());
+        if(!check.isSuccess()){
+            resp.clone(check);
+            return resp ;
+        }
+
+        Integer affectRowNum = this.sysUserInfoMapper.updateForm(data);
+        return resp.getByAffectRowNum(affectRowNum);
     }
 
     @Override
     public RespData<String> updateById(SysUserInfoDto sysUserInfoDto) {
         RespData<String> resp = new RespData<String>();
 
-        RespData<SysUserInfoDto> check = this.checkById(sysUserInfoDto.getId());
+        RespData<SysUserInfo> check = this.checkById(sysUserInfoDto.getId());
         if(!check.isSuccess()){
             resp.clone(check);
             return resp ;
@@ -49,7 +86,18 @@ public class SysUserInfoServiceImpl implements ISysUserInfoService {
 
     @Override
     public RespData<SysUserInfoDto> getById(Long id) {
-        return this.checkById(id);
+        RespData<SysUserInfoDto> resp = new RespData<>();
+
+        RespData<SysUserInfo> check = this.checkById(id);
+        if(!check.isSuccess()){
+            resp.clone(check);
+            return resp ;
+        }
+
+        SysUserInfo data = check.getData();
+        SysUserInfoDto dto = this.getSysUserInfoDto(data);
+
+        return resp.buildSuccess(dto);
     }
 
     @Override
@@ -57,12 +105,7 @@ public class SysUserInfoServiceImpl implements ISysUserInfoService {
         RespData<List<SysUserInfoDto>> resp = new RespData<List<SysUserInfoDto>>();
 
         List<SysUserInfo> dataList = this.sysUserInfoMapper.list(querySysUserInfoVo);
-        List<SysUserInfoDto> dtoList = new ArrayList<SysUserInfoDto>();
-        for(int i=0;i<dataList.size();i++){
-            SysUserInfo data = dataList.get(i);
-            SysUserInfoDto dto = this.getSysUserInfoDto(data);
-            dtoList.add(dto);
-        }
+        List<SysUserInfoDto> dtoList = this.transferList(dataList);
 
         return resp.buildSuccess(dtoList);
     }
@@ -72,33 +115,83 @@ public class SysUserInfoServiceImpl implements ISysUserInfoService {
         RespData<Pagination<SysUserInfoDto>> resp = new RespData<Pagination<SysUserInfoDto>>();
 
         List<SysUserInfo> dataList = this.sysUserInfoMapper.list(querySysUserInfoVo);
-        List<SysUserInfoDto> dtoList = new ArrayList<SysUserInfoDto>();
+        Long count = this.sysUserInfoMapper.count(querySysUserInfoVo);
+
+        List<SysUserInfoDto> dtoList = this.transferList(dataList);
+        Pagination<SysUserInfoDto> data = new Pagination<>(querySysUserInfoVo.getPageNo(),querySysUserInfoVo.getPageSize(),count,dtoList);
+
+        return resp.buildSuccess(data);
+    }
+
+    private List<SysUserInfoDto> transferList(List<SysUserInfo> dataList){
+        List<SysUserInfoDto> dtoList = new ArrayList<>();
+
         for(int i=0;i<dataList.size();i++){
             SysUserInfo data = dataList.get(i);
             SysUserInfoDto dto = this.getSysUserInfoDto(data);
             dtoList.add(dto);
         }
 
-        Long count = this.sysUserInfoMapper.count(querySysUserInfoVo);
-        Pagination<SysUserInfoDto> data = new Pagination<>(querySysUserInfoVo.getPageNo(),querySysUserInfoVo.getPageSize(),count,dtoList);
-
-        return resp.buildSuccess(data);
+        return dtoList ;
     }
 
-    private RespData<String> checkForm(SysUserInfo sysUserInfo){
-        RespData<String> resp = new RespData<String>();
+    private RespData<SysUserInfo> checkForm(SysUserInfoDto sysUserInfoDto){
+        RespData<SysUserInfo> resp = new RespData<SysUserInfo>();
 
-        String email = sysUserInfo.getEmail();
-        String userType = sysUserInfo.getUserType();
-        String enableStatus = sysUserInfo.getEnableStatus();
-        String realname = sysUserInfo.getRealname();
-        String phone = sysUserInfo.getPhone();
+        String email = sysUserInfoDto.getEmail();
+        String userType = sysUserInfoDto.getUserType();
+        String enableStatus = sysUserInfoDto.getEnableStatus();
+        String realname = sysUserInfoDto.getRealname();
+        String phone = sysUserInfoDto.getPhone();
+        Long id = sysUserInfoDto.getId();
+        String username = sysUserInfoDto.getUsername();
 
-        return resp ;
+        //检查字段
+        List<CheckParamVo> paramList = new ArrayList<CheckParamVo>();
+        paramList.add(new CheckParamVo("email","邮件地址",email,"string",false,true,100));
+        paramList.add(new CheckParamVo("userType","用户类型",userType,"string",false,true,20));
+        paramList.add(new CheckParamVo("enableStatus","使用状态",enableStatus,"string",false,true,20));
+        paramList.add(new CheckParamVo("realname","真实姓名",realname,"string",false,true,100));
+        paramList.add(new CheckParamVo("phone","电话",phone,"string",false,true,20));
+        if(id==null){
+            paramList.add(new CheckParamVo("username","用户名",username,"string",false,true,50));
+        }
+
+        Map<String,Object> checkMap = CheckUtil.checkParamData(paramList);
+        if(!String.valueOf(checkMap.get("code")).trim().equals(RespCodeEnum.SUCCESS.getCode())){
+            resp.setCode(RespCodeEnum.FAIL.getCode());
+            resp.setMessage(String.valueOf(checkMap.get("message")));
+            return resp ;
+        }
+
+        if(id==null){
+            List<SysUserInfo> dataList = this.sysUserInfoMapper.getExistByName(id,username);
+            if(dataList.size()>0){
+                resp.setCode(RespCodeEnum.OBJECT_REPEAT.getCode());
+                resp.setMessage("该用户名已经存在,请重新输入");
+                return resp ;
+            }
+        }
+
+        SysUserInfo data = new SysUserInfo();
+        data.setCreateTime(new Date(System.currentTimeMillis()));
+        data.setCreator(sysUserInfoDto.getCreator());
+        data.setUpdateTime(new Date(System.currentTimeMillis()));
+        data.setUpdator(sysUserInfoDto.getUpdator());
+        data.setEnableStatus(enableStatus);
+        data.setEmail(email);
+        data.setIsDeleted("N");
+        data.setRealname(realname);
+        data.setPhone(phone);
+        data.setUsername(username);
+        data.setUserType(userType);
+        data.setId(id);
+
+        return resp.buildSuccess(data) ;
     }
 
-    private RespData<SysUserInfoDto> checkById(Long id){
-        RespData<SysUserInfoDto> resp = new RespData<SysUserInfoDto>();
+    private RespData<SysUserInfo> checkById(Long id){
+        RespData<SysUserInfo> resp = new RespData<SysUserInfo>();
         if(id==null){
             resp.setCode(RespCodeEnum.PARAM_EMPTY_ERROR_CODE.getCode());
             resp.setMessage("Id不能为空,请重新输入");
@@ -116,8 +209,7 @@ public class SysUserInfoServiceImpl implements ISysUserInfoService {
             return resp ;
         }
 
-        SysUserInfoDto dto = this.getSysUserInfoDto(data);
-        return resp.buildSuccess(dto);
+        return resp.buildSuccess(data);
     }
 
     private SysUserInfoDto getSysUserInfoDto(SysUserInfo sysUserInfo){

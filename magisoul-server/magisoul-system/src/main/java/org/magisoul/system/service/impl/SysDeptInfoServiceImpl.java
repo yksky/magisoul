@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -61,7 +62,7 @@ public class SysDeptInfoServiceImpl implements ISysDeptInfoService {
         RespData<String> resp = new RespData<String>();
 
         SysDeptInfo sysDeptInfo = this.getSysDeptInfo(sysDeptInfoDto);
-        RespData<SysDeptInfoDto> check = this.checkById(sysDeptInfo.getId());
+        RespData<SysDeptInfo> check = this.checkById(sysDeptInfo.getId());
         if(!check.isSuccess()){
             resp.clone(check);
             return resp ;
@@ -73,7 +74,17 @@ public class SysDeptInfoServiceImpl implements ISysDeptInfoService {
 
     @Override
     public RespData<SysDeptInfoDto> getById(Long id) {
-        return this.checkById(id);
+        RespData<SysDeptInfoDto> resp = new RespData<>();
+
+        RespData<SysDeptInfo> check = this.checkById(id);
+        if(!check.isSuccess()){
+            resp.clone(check);
+            return resp ;
+        }
+
+        SysDeptInfo data = check.getData();
+        SysDeptInfoDto dto = this.getSysDeptInfoDto(data);
+        return resp.buildSuccess(dto);
     }
 
     @Override
@@ -81,12 +92,7 @@ public class SysDeptInfoServiceImpl implements ISysDeptInfoService {
         RespData<List<SysDeptInfoDto>> resp = new RespData<List<SysDeptInfoDto>>();
 
         List<SysDeptInfo> dataList = this.sysDeptInfoMapper.list(querySysDeptInfoVo);
-        List<SysDeptInfoDto> dtoList = new ArrayList<SysDeptInfoDto>();
-        for(int i=0;i<dataList.size();i++){
-            SysDeptInfo data = dataList.get(i);
-            SysDeptInfoDto dto = this.getSysDeptInfoDto(data);
-            dtoList.add(dto);
-        }
+        List<SysDeptInfoDto> dtoList = this.transferList(dataList);
 
         return resp.buildSuccess(dtoList);
     }
@@ -98,15 +104,92 @@ public class SysDeptInfoServiceImpl implements ISysDeptInfoService {
         List<SysDeptInfo> dataList = this.sysDeptInfoMapper.list(querySysDeptInfoVo);
         Long count = this.sysDeptInfoMapper.count(querySysDeptInfoVo);
 
+        List<SysDeptInfoDto> dtoList = this.transferList(dataList);
+
+        Pagination<SysDeptInfoDto> data = new Pagination<>(querySysDeptInfoVo.getPageNo(), querySysDeptInfoVo.getPageSize(), count, dtoList);
+        return resp.buildSuccess(data);
+    }
+
+    @Override
+    public RespData<String> enable(SysDeptInfoDto sysDeptInfoDto) {
+        RespData<String> resp = new RespData<>();
+
+        RespData<SysDeptInfo> check = this.checkById(sysDeptInfoDto.getId());
+        if(!check.isSuccess()){
+            resp.clone(check);
+            return resp ;
+        }
+
+        SysDeptInfo data = check.getData();
+        if(data.getEnableStatus().trim().equals("enable")){
+            resp.build(RespCodeEnum.ENABLE_STATUS);
+            return resp ;
+        }
+
+        SysDeptInfo updateVo = new SysDeptInfo();
+        updateVo.setId(sysDeptInfoDto.getId());
+        updateVo.setEnableStatus("enable");
+        updateVo.setUpdateTime(new Date(System.currentTimeMillis()));
+        updateVo.setUpdator(sysDeptInfoDto.getUpdator());
+
+        Integer affectRowNum = this.sysDeptInfoMapper.updateById(updateVo);
+        return resp.getByAffectRowNum(affectRowNum);
+    }
+
+    @Override
+    public RespData<String> disable(SysDeptInfoDto sysDeptInfoDto) {
+        RespData<String> resp = new RespData<>();
+
+        RespData<SysDeptInfo> check = this.checkById(sysDeptInfoDto.getId());
+        if(!check.isSuccess()){
+            resp.clone(check);
+            return resp ;
+        }
+
+        SysDeptInfo data = check.getData();
+        if(data.getEnableStatus().trim().equals("disable")){
+            resp.build(RespCodeEnum.DISABLE_STATUS);
+            return resp ;
+        }
+
+        SysDeptInfo updateVo = new SysDeptInfo();
+        updateVo.setId(sysDeptInfoDto.getId());
+        updateVo.setUpdateTime(new Date(System.currentTimeMillis()));
+        updateVo.setUpdator(sysDeptInfoDto.getUpdator());
+        updateVo.setEnableStatus("disable");
+
+        Integer affectRowNum = this.sysDeptInfoMapper.updateById(updateVo);
+        return resp.getByAffectRowNum(affectRowNum);
+    }
+
+    @Override
+    public RespData<String> deleteById(SysDeptInfoDto sysDeptInfoDto) {
+        RespData<String> resp = new RespData<>();
+
+        RespData<SysDeptInfo> check = this.checkById(sysDeptInfoDto.getId());
+        if(!check.isSuccess()){
+            resp.clone(check);
+            return resp ;
+        }
+
+        SysDeptInfo updateVo = new SysDeptInfo();
+        updateVo.setUpdator(sysDeptInfoDto.getUpdator());
+        updateVo.setIsDeleted("Y");
+        updateVo.setId(sysDeptInfoDto.getId());
+        updateVo.setUpdateTime(new Date(System.currentTimeMillis()));
+
+        Integer affectRowNum = this.sysDeptInfoMapper.updateById(updateVo);
+        return resp.getByAffectRowNum(affectRowNum);
+    }
+
+    private List<SysDeptInfoDto> transferList(List<SysDeptInfo> dataList){
         List<SysDeptInfoDto> dtoList = new ArrayList<SysDeptInfoDto>();
         for(int i=0;i<dataList.size();i++){
             SysDeptInfo data = dataList.get(i);
             SysDeptInfoDto dto = this.getSysDeptInfoDto(data);
             dtoList.add(dto);
         }
-
-        Pagination<SysDeptInfoDto> data = new Pagination<>(querySysDeptInfoVo.getPageNo(), querySysDeptInfoVo.getPageSize(), count, dtoList);
-        return resp.buildSuccess(data);
+        return dtoList ;
     }
 
     private RespData<SysDeptInfo> checkForm(SysDeptInfo sysDeptInfo){
@@ -152,8 +235,8 @@ public class SysDeptInfoServiceImpl implements ISysDeptInfoService {
         return resp.build(RespCodeEnum.SUCCESS) ;
     }
 
-    private RespData<SysDeptInfoDto> checkById(Long id){
-        RespData<SysDeptInfoDto> resp = new RespData<SysDeptInfoDto>();
+    private RespData<SysDeptInfo> checkById(Long id){
+        RespData<SysDeptInfo> resp = new RespData<SysDeptInfo>();
         if(id==null){
             resp.setCode(RespCodeEnum.PARAM_EMPTY_ERROR_CODE.getCode());
             resp.setMessage("主键Id为空,请重新输入");
@@ -170,8 +253,7 @@ public class SysDeptInfoServiceImpl implements ISysDeptInfoService {
             resp.setMessage("改部门已经删除,请重新输入");
             return resp ;
         }
-        SysDeptInfoDto dto = this.getSysDeptInfoDto(data);
-        return resp.buildSuccess(dto);
+        return resp.buildSuccess(data);
     }
 
     private SysDeptInfo getSysDeptInfo(SysDeptInfoDto dto){

@@ -7,6 +7,7 @@ import org.magisoul.system.model.query.QuerySysDictItemInfoVo;
 import org.magisoul.system.service.ISysDictItemInfoService;
 import org.magisoul.util.CheckUtil;
 import org.magisoul.util.Dto2Entity;
+import org.magisoul.util.SnowflakeIdUtil;
 import org.magisoul.util.enums.RespCodeEnum;
 import org.magisoul.util.model.CheckParamVo;
 import org.magisoul.util.model.Pagination;
@@ -36,6 +37,8 @@ public class SysDictItemInfoServiceImpl implements ISysDictItemInfoService {
         }
 
         SysDictItemInfo data = checkForm.getData();
+        data.setId(new SnowflakeIdUtil(0,0).nextId());
+
         Integer affectRowNum = this.sysDictItemInfoMapper.add(data);
         return resp.getByAffectRowNum(affectRowNum);
     }
@@ -107,8 +110,8 @@ public class SysDictItemInfoServiceImpl implements ISysDictItemInfoService {
 
         List<SysDictItemInfo> dataList = this.sysDictItemInfoMapper.list(querySysDictItemInfoVo);
         Long count = this.sysDictItemInfoMapper.count(querySysDictItemInfoVo);
-        List<SysDictItemInfoDto> dtoList = this.transferList(dataList);
 
+        List<SysDictItemInfoDto> dtoList = this.transferList(dataList);
         Pagination<SysDictItemInfoDto> data = new Pagination<>(querySysDictItemInfoVo.getPageNo(),querySysDictItemInfoVo.getPageSize(),count,dtoList);
 
         return resp.buildSuccess(data);
