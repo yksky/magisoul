@@ -36,7 +36,7 @@ public class SysDictItemInfoApiImpl implements ISysDictItemInfoApi {
         }catch(Exception e){
             logger.error("类名:{},方法名:{},参数:[sysDictItemInfoDto:{}],编辑数据字典表单异常,异常信息:{}",
                     "SysDictItemInfoApiImpl","mergeForm", JSON.toJSONString(sysDictItemInfoDto),e);
-            resp.buildFail("编辑数据字典表单失败");
+            resp.buildFail();
         }
         return resp;
     }
@@ -55,7 +55,7 @@ public class SysDictItemInfoApiImpl implements ISysDictItemInfoApi {
         }catch(Exception e){
             logger.error("类名:{},方法名:{},参数:[sysDictItemInfoDto:{}],根据Id更新数据字典异常,异常信息:{}",
                     "SysDictItemInfoApiImpl","updateById", JSON.toJSONString(sysDictItemInfoDto),e);
-            resp.buildFail("根据Id更新数据字典失败");
+            resp.buildFail();
         }
         return resp;
     }
@@ -70,7 +70,7 @@ public class SysDictItemInfoApiImpl implements ISysDictItemInfoApi {
         }catch(Exception e){
             logger.error("类名:{},方法名:{},参数:[id:{}],根据Id获取数据字典异常,异常信息:{}",
                     "SysDictItemInfoApiImpl","getById", id, e);
-            resp.buildFail("根据Id获取数据字典失败");
+            resp.buildFail();
         }
         return resp;
     }
@@ -85,7 +85,7 @@ public class SysDictItemInfoApiImpl implements ISysDictItemInfoApi {
         }catch(Exception e){
             logger.error("类名:{},方法名:{},参数:[querySysDictItemInfoVo:{}],根据条件获取数据字典不分页信息异常,异常信息:{}",
                     "SysDictItemInfoApiImpl","list", JSON.toJSONString(querySysDictItemInfoVo), e);
-            resp.buildFail("根据条件获取数据字典不分页信息失败");
+            resp.buildFail();
         }
         return resp;
     }
@@ -100,7 +100,7 @@ public class SysDictItemInfoApiImpl implements ISysDictItemInfoApi {
         }catch(Exception e){
             logger.error("类名:{},方法名:{},参数:[querySysDictItemInfoVo:{}],根据条件获取数据字典分页信息异常,异常信息:{}",
                     "SysDictItemInfoApiImpl","pageList", JSON.toJSONString(querySysDictItemInfoVo), e);
-            resp.buildFail("根据条件获取数据字典分页信息失败");
+            resp.buildFail();
         }
         return resp;
     }
@@ -115,7 +115,7 @@ public class SysDictItemInfoApiImpl implements ISysDictItemInfoApi {
         }catch(Exception e){
             logger.error("类名:{},方法名:{},参数:[sysDictItemInfoDto:{}],启用数据字典异常,异常信息:{}",
                     "SysDictItemInfoApiImpl","enable", JSON.toJSONString(sysDictItemInfoDto), e);
-            resp.buildFail("启用数据字典失败");
+            resp.buildFail();
         }
         return resp;
     }
@@ -130,7 +130,7 @@ public class SysDictItemInfoApiImpl implements ISysDictItemInfoApi {
         }catch(Exception e){
             logger.error("类名:{},方法名:{},参数:[sysDictItemInfoDto:{}],禁用数据字典异常,异常信息:{}",
                     "SysDictItemInfoApiImpl","disable", JSON.toJSONString(sysDictItemInfoDto), e);
-            resp.buildFail("禁用数据字典失败");
+            resp.buildFail();
         }
         return resp;
     }
@@ -145,7 +145,7 @@ public class SysDictItemInfoApiImpl implements ISysDictItemInfoApi {
         }catch(Exception e){
             logger.error("类名:{},方法名:{},参数:[sysDictItemInfoDto:{}],删除数据字典异常,异常信息:{}",
                     "SysDictItemInfoApiImpl","deleteById", JSON.toJSONString(sysDictItemInfoDto), e);
-            resp.buildFail("删除数据字典失败");
+            resp.buildFail();
         }
         return resp;
     }

@@ -36,7 +36,7 @@ public class SysDictInfoApiImpl implements ISysDictInfoApi {
         }catch(Exception e){
             logger.error("类名:{},方法名:{},参数:[sysDictInfoDto:{}],编辑字典类型表单异常,异常信息:{}",
                     "SysDictInfoApiImpl","mergeForm", JSON.toJSONString(sysDictInfoDto),e);
-            resp.buildFail("编辑字典类型表单失败");
+            resp.buildFail();
         }
         return resp;
     }
@@ -51,7 +51,7 @@ public class SysDictInfoApiImpl implements ISysDictInfoApi {
         }catch(Exception e){
             logger.error("类名:{},方法名:{},参数:[sysDictInfoDto:{}],根据Id更新字典类型异常,异常信息:{}",
                     "SysDictInfoApiImpl","updateById", JSON.toJSONString(sysDictInfoDto),e);
-            resp.buildFail("根据Id更新字典类型失败");
+            resp.buildFail();
         }
         return resp;
     }
@@ -66,7 +66,7 @@ public class SysDictInfoApiImpl implements ISysDictInfoApi {
         }catch(Exception e){
             logger.error("类名:{},方法名:{},参数:[id:{}],根据Id获取字典类型异常,异常信息:{}",
                     "SysDictInfoApiImpl","getById", id, e);
-            resp.buildFail("根据Id获取字典类型失败");
+            resp.buildFail();
         }
         return resp;
     }
@@ -81,7 +81,7 @@ public class SysDictInfoApiImpl implements ISysDictInfoApi {
         }catch(Exception e){
             logger.error("类名:{},方法名:{},参数:[querySysDictInfoVo:{}],根据条件获取字典类型不分页信息异常,异常信息:{}",
                     "SysDictInfoApiImpl","list", JSON.toJSONString(querySysDictInfoVo), e);
-            resp.buildFail("根据条件获取字典类型不分页列表信息失败");
+            resp.buildFail();
         }
         return resp;
     }
@@ -96,7 +96,7 @@ public class SysDictInfoApiImpl implements ISysDictInfoApi {
         }catch(Exception e){
             logger.error("类名:{},方法名:{},参数:[querySysDictInfoVo:{}],根据条件获取字典类型分页信息异常,异常信息:{}",
                     "SysDictInfoApiImpl","pageList", JSON.toJSONString(querySysDictInfoVo), e);
-            resp.buildFail("根据条件获取字典类型分页列表信息失败");
+            resp.buildFail();
         }
         return resp;
     }
@@ -111,7 +111,7 @@ public class SysDictInfoApiImpl implements ISysDictInfoApi {
         }catch(Exception e){
             logger.error("类名:{},方法名:{},参数:[sysDictInfoDto:{}],启用字典类型异常,异常信息:{}",
                     "SysDictInfoApiImpl","enable", JSON.toJSONString(sysDictInfoDto), e);
-            resp.buildFail("启用字典类型失败");
+            resp.buildFail();
         }
         return resp;
     }
@@ -126,7 +126,7 @@ public class SysDictInfoApiImpl implements ISysDictInfoApi {
         }catch(Exception e){
             logger.error("类名:{},方法名:{},参数:[sysDictInfoDto:{}],禁用字典类型异常,异常信息:{}",
                     "SysDictInfoApiImpl","disable", JSON.toJSONString(sysDictInfoDto), e);
-            resp.buildFail("禁用字典类型失败");
+            resp.buildFail();
         }
         return resp;
     }
@@ -141,7 +141,7 @@ public class SysDictInfoApiImpl implements ISysDictInfoApi {
         }catch(Exception e){
             logger.error("类名:{},方法名:{},参数:[sysDictInfoDto:{}],根据Id删除字典类型正常,异常信息:{}",
                     "SysDictInfoApiImpl","deleteById", JSON.toJSONString(sysDictInfoDto), e);
-            resp.buildFail("删除字典类型失败");
+            resp.buildFail();
         }
         return resp;
     }

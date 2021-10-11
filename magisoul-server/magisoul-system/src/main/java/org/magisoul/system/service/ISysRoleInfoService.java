@@ -22,4 +22,10 @@ public interface ISysRoleInfoService {
 
     public RespData<Pagination<SysRoleInfoDto>> pageList(QuerySysRoleInfoVo querySysRoleInfoVo);
 
+    public RespData<String> enable(SysRoleInfoDto sysRoleInfoDto);
+
+    public RespData<String> disable(SysRoleInfoDto sysRoleInfoDto);
+
+    public RespData<String> deleteById(SysRoleInfoDto sysRoleInfoDto);
+
 }

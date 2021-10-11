@@ -42,7 +42,7 @@ public class SysUserInfoApiImpl implements ISysUserInfoApi {
         }catch(Exception e){
             logger.error("类名:{},方法名:{},参数:[sysUserInfoDto:{}],编辑用户信息异常,异常信息:{}",
                     "SysUserInfoApiImpl","mergeForm", JSON.toJSONString(sysUserInfoDto),e);
-            resp.buildFail("编辑用户信息失败");
+            resp.buildFail();
         }
         return resp;
     }
@@ -63,7 +63,7 @@ public class SysUserInfoApiImpl implements ISysUserInfoApi {
         }catch(Exception e){
             logger.error("类名:{},方法名:{},参数:[sysUserInfoDto:{}],根据Id更新用户信息异常,异常信息:{}",
                     "SysUserInfoApiImpl","updateById", JSON.toJSONString(sysUserInfoDto),e);
-            resp.buildFail("根据Id更新用户信息失败");
+            resp.buildFail();
         }
         return resp;
     }
@@ -84,7 +84,7 @@ public class SysUserInfoApiImpl implements ISysUserInfoApi {
         }catch(Exception e){
             logger.error("类名:{},方法名:{},参数:[id:{}],根据Id获取用户信息异常,异常信息:{}",
                     "SysUserInfoApiImpl","getById", id, e);
-            resp.buildFail("根据Id获取用户信息失败");
+            resp.buildFail();
         }
         return resp;
     }
@@ -105,7 +105,7 @@ public class SysUserInfoApiImpl implements ISysUserInfoApi {
         }catch(Exception e){
             logger.error("类名:{},方法名:{},参数:[querySysUserInfoVo:{}],根据条件获取用户不分页列表信息异常,异常信息:{}",
                     "SysUserInfoApiImpl","list", JSON.toJSONString(querySysUserInfoVo), e);
-            resp.buildFail("根据条件获取不分页用户信息失败");
+            resp.buildFail();
         }
         return resp;
     }
@@ -126,7 +126,7 @@ public class SysUserInfoApiImpl implements ISysUserInfoApi {
         }catch(Exception e){
             logger.error("类名:{},方法名:{},参数:[querySysUserInfoVo:{}],根据条件获取用户分页列表信息异常,异常信息:{}",
                     "SysUserInfoApiImpl","pageList", JSON.toJSONString(querySysUserInfoVo), e);
-            resp.buildFail("根据条件获取分页用户信息失败");
+            resp.buildFail();
         }
         return resp;
     }

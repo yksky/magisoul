@@ -11,7 +11,7 @@ public interface ISysRoleInfoApi {
 
     public RespData<String> mergeForm(SysRoleInfoDto sysRoleInfoDto);
 
-    public RespData<String> updateById(SysRoleInfoDto sysDictInfoDto);
+    public RespData<String> updateById(SysRoleInfoDto sysRoleInfoDto);
 
     public RespData<SysRoleInfoDto> getById(Long id);
 

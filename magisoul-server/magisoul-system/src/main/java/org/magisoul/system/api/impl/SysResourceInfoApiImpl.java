@@ -36,7 +36,7 @@ public class SysResourceInfoApiImpl implements ISysResourceInfoApi {
         }catch(Exception e){
             logger.error("类名:{},方法名:{},参数:[sysResourceInfoDto:{}],编辑资源表单异常,异常信息:{}",
                     "SysResourceInfoApiImpl","mergeForm", JSON.toJSONString(sysResourceInfoDto),e);
-            resp.buildFail("编辑资源失败");
+            resp.buildFail();
         }
         return resp;
     }
@@ -51,7 +51,7 @@ public class SysResourceInfoApiImpl implements ISysResourceInfoApi {
         }catch(Exception e){
             logger.error("类名:{},方法名:{},参数:[sysResourceInfoDto:{}],根据Id更新资源信息异常,异常信息:{}",
                     "SysResourceInfoApiImpl","updateById", JSON.toJSONString(sysResourceInfoDto),e);
-            resp.buildFail("根据Id更新资源信息失败");
+            resp.buildFail();
         }
         return resp;
     }
@@ -66,7 +66,7 @@ public class SysResourceInfoApiImpl implements ISysResourceInfoApi {
         }catch(Exception e){
             logger.error("类名:{},方法名:{},参数:[id:{}],根据Id获取资源信息异常,异常信息:{}",
                     "SysResourceInfoApiImpl","getById", id,e);
-            resp.buildFail("根据Id获取资源信息失败");
+            resp.buildFail();
         }
         return resp;
     }
@@ -81,7 +81,7 @@ public class SysResourceInfoApiImpl implements ISysResourceInfoApi {
         }catch(Exception e){
             logger.error("类名:{},方法名:{},参数:[querySysResourceInfoVo:{}],获取资源不分页列表信息异常,异常信息:{}",
                     "SysResourceInfoApiImpl","list", JSON.toJSONString(querySysResourceInfoVo),e);
-            resp.buildFail("获取资源不分页列表信息失败");
+            resp.buildFail();
         }
         return resp;
     }
@@ -96,7 +96,7 @@ public class SysResourceInfoApiImpl implements ISysResourceInfoApi {
         }catch(Exception e){
             logger.error("类名:{},方法名:{},参数:[querySysResourceInfoVo:{}],获取资源分页列表信息异常,异常信息:{}",
                     "SysResourceInfoApiImpl","pageList", JSON.toJSONString(querySysResourceInfoVo),e);
-            resp.buildFail("获取资源分页列表信息失败");
+            resp.buildFail();
         }
         return resp;
     }
@@ -111,7 +111,7 @@ public class SysResourceInfoApiImpl implements ISysResourceInfoApi {
         }catch(Exception e){
             logger.error("类名:{},方法名:{},参数:[sysResourceInfoDto:{}],启用资源异常,异常信息:{}",
                     "SysResourceInfoApiImpl","enable", JSON.toJSONString(sysResourceInfoDto),e);
-            resp.buildFail("启用资源失败");
+            resp.buildFail();
         }
         return resp ;
     }
@@ -126,7 +126,7 @@ public class SysResourceInfoApiImpl implements ISysResourceInfoApi {
         }catch(Exception e){
             logger.error("类名:{},方法名:{},参数:[sysResourceInfoDto:{}],禁用资源异常,异常信息:{}",
                     "SysResourceInfoApiImpl","disable", JSON.toJSONString(sysResourceInfoDto),e);
-            resp.buildFail("禁用资源失败");
+            resp.buildFail();
         }
         return resp ;
     }
@@ -141,7 +141,7 @@ public class SysResourceInfoApiImpl implements ISysResourceInfoApi {
         }catch(Exception e){
             logger.error("类名:{},方法名:{},参数:[sysResourceInfoDto:{}],删除资源异常,异常信息:{}",
                     "SysResourceInfoApiImpl","deleteById", JSON.toJSONString(sysResourceInfoDto),e);
-            resp.buildFail("删除资源失败");
+            resp.buildFail();
         }
         return resp ;
     }

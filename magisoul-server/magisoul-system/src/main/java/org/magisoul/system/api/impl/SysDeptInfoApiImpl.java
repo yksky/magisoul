@@ -36,7 +36,7 @@ public class SysDeptInfoApiImpl implements ISysDeptInfoApi {
         }catch(Exception e){
             logger.error("类名:{},方法名:{},参数:[sysDeptInfoDto:{}],编辑部门信息异常,异常信息:{}",
                     "SysDeptInfoApiImpl","mergeForm", JSON.toJSONString(sysDeptInfoDto),e);
-            resp.buildFail("编辑部门信息失败");
+            resp.buildFail();
         }
         return resp;
     }
@@ -51,7 +51,7 @@ public class SysDeptInfoApiImpl implements ISysDeptInfoApi {
         }catch(Exception e){
             logger.error("类名:{},方法名:{},参数:[sysDeptInfoDto:{}],根据Id更新部门信息异常,异常信息:{}",
                     "SysDeptInfoApiImpl","updateById", JSON.toJSONString(sysDeptInfoDto),e);
-            resp.buildFail("根据Id更新部门信息失败");
+            resp.buildFail();
         }
         return resp;
     }
@@ -66,7 +66,7 @@ public class SysDeptInfoApiImpl implements ISysDeptInfoApi {
         }catch(Exception e){
             logger.error("类名:{},方法名:{},参数:[id:{}],根据Id获取部门信息异常,异常信息:{}",
                     "SysDeptInfoApiImpl","getById", id,e);
-            resp.buildFail("根据Id获取部门信息失败");
+            resp.buildFail();
         }
         return resp;
     }
@@ -81,7 +81,7 @@ public class SysDeptInfoApiImpl implements ISysDeptInfoApi {
         }catch(Exception e){
             logger.error("类名:{},方法名:{},参数:[querySysDeptInfoVo:{}],获取部门不分页信息列表异常,异常信息:{}",
                     "SysDeptInfoApiImpl","list", JSON.toJSONString(querySysDeptInfoVo), e);
-            resp.buildFail("获取部门不分页列表失败");
+            resp.buildFail();
         }
         return resp;
     }
@@ -111,7 +111,7 @@ public class SysDeptInfoApiImpl implements ISysDeptInfoApi {
         }catch(Exception e){
             logger.error("类名:{},方法名:{},参数:[sysDeptInfoDto:{}],更新部门状态为使用异常,异常信息:{}",
                     "SysDeptInfoApiImpl","enable", JSON.toJSONString(sysDeptInfoDto), e);
-            resp.buildFail("更新部门状态为使用失败");
+            resp.buildFail();
         }
         return resp;
     }
@@ -126,7 +126,7 @@ public class SysDeptInfoApiImpl implements ISysDeptInfoApi {
         }catch(Exception e){
             logger.error("类名:{},方法名:{},参数:[sysDeptInfoDto:{}],更新部门状态为禁用异常,异常信息:{}",
                     "SysDeptInfoApiImpl","disable", JSON.toJSONString(sysDeptInfoDto), e);
-            resp.buildFail("更新部门状态为禁用失败");
+            resp.buildFail();
         }
         return resp;
     }
@@ -141,7 +141,7 @@ public class SysDeptInfoApiImpl implements ISysDeptInfoApi {
         }catch(Exception e){
             logger.error("类名:{},方法名:{},参数:[sysDeptInfoDto:{}],根据Id删除部门异常,异常信息:{}",
                     "SysDeptInfoApiImpl","deleteById", JSON.toJSONString(sysDeptInfoDto), e);
-            resp.buildFail("根据Id删除部门失败");
+            resp.buildFail();
         }
         return resp;
     }
