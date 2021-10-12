@@ -34,9 +34,9 @@ public enum RespCodeEnum {
     USER_NOT_EXIST("1001","该用户不存在"),
     USER_DELETED("1002","该用户已经删除"),
     USER_DISABLE("1003","该用户已被禁用"),
-    USER_NAME_EMPTY("1004","用户名不能为空,请重新输入"),
-    USER_PWD_EMPTY("1005","密码不能为空,请重新输入"),
-    USER_RECORD_MORE("1006","该用户名存在多条记录,请重新输入"),
+    USER_NAME_PWD_EMPTY("1004","用户名或密码不能为空,请重新输入"),
+    //USER_PWD_EMPTY("1005","密码不能为空,请重新输入"),
+    USER_RECORD_MORE("1006","该用户名异常,请重新输入"),
     USER_PWD_NOT_CORRECT("1007","登录用户名或者密码不正确,请重新输入"),
 
     //角色部分提示 1100-1200

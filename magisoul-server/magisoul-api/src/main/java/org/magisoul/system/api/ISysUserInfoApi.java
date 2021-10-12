@@ -67,9 +67,11 @@ public interface ISysUserInfoApi {
 
     /**
      * 删除该用户
-     * @param id
+     * @param sysUserInfoDto
      * @return
      */
-    public RespData<String> deleteById(Long id);
+    public RespData<String> deleteById(SysUserInfoDto sysUserInfoDto);
+
+    public RespData<SysUserInfoDto> login(String username,String password);
 
 }

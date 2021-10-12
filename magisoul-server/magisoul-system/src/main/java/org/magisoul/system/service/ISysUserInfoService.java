@@ -22,4 +22,12 @@ public interface ISysUserInfoService {
 
     public RespData<Pagination<SysUserInfoDto>> pageList(QuerySysUserInfoVo querySysUserInfoVo);
 
+    public RespData<SysUserInfoDto> login(String username,String password);
+
+    public RespData<String> enable(SysUserInfoDto sysUserInfoDto);
+
+    public RespData<String> disable(SysUserInfoDto sysUserInfoDto);
+
+    public RespData<String> deleteById(SysUserInfoDto sysUserInfoDto);
+
 }

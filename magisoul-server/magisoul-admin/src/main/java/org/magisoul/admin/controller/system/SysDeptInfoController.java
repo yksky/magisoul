@@ -19,14 +19,8 @@ public class SysDeptInfoController {
     @Autowired
     private ISysDeptInfoApi sysDeptInfoApi ;
 
-    @PostMapping("/add")
-    public String add(@RequestBody SysDeptInfoDto sysDeptInfoDto){
-        RespData<String> resp = this.sysDeptInfoApi.mergeForm(sysDeptInfoDto);
-        return JSON.toJSONString(resp);
-    }
-
-    @PostMapping("/update")
-    public String update(@RequestBody SysDeptInfoDto sysDeptInfoDto){
+    @PostMapping("/merge")
+    public String merge(@RequestBody SysDeptInfoDto sysDeptInfoDto){
         RespData<String> resp = this.sysDeptInfoApi.mergeForm(sysDeptInfoDto);
         return JSON.toJSONString(resp);
     }

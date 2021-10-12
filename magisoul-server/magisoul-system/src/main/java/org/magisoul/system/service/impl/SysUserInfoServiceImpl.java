@@ -7,11 +7,13 @@ import org.magisoul.system.model.query.QuerySysUserInfoVo;
 import org.magisoul.system.service.ISysUserInfoService;
 import org.magisoul.util.CheckUtil;
 import org.magisoul.util.Dto2Entity;
+import org.magisoul.util.ObjectUtil;
 import org.magisoul.util.SnowflakeIdUtil;
 import org.magisoul.util.enums.RespCodeEnum;
 import org.magisoul.util.model.CheckParamVo;
 import org.magisoul.util.model.Pagination;
 import org.magisoul.util.model.RespData;
+import org.magisoul.util.security.Md5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -121,6 +123,111 @@ public class SysUserInfoServiceImpl implements ISysUserInfoService {
         Pagination<SysUserInfoDto> data = new Pagination<>(querySysUserInfoVo.getPageNo(),querySysUserInfoVo.getPageSize(),count,dtoList);
 
         return resp.buildSuccess(data);
+    }
+
+    @Override
+    public RespData<SysUserInfoDto> login(String username, String password) {
+        RespData<SysUserInfoDto> resp = new RespData<>();
+
+        if(ObjectUtil.isEmpty(username) || ObjectUtil.isEmpty(password)){
+            resp.build(RespCodeEnum.USER_NAME_PWD_EMPTY);
+            return resp ;
+        }
+
+        QuerySysUserInfoVo querySysUserInfoVo = new QuerySysUserInfoVo();
+        querySysUserInfoVo.setUsername(username);
+        querySysUserInfoVo.setIsDeleted("N");
+
+        List<SysUserInfo> dataList = this.sysUserInfoMapper.list(querySysUserInfoVo);
+        if(dataList.size()==0){
+            resp.build(RespCodeEnum.USER_NOT_EXIST);
+            return resp ;
+        }
+        if(dataList.size()>1){
+            resp.build(RespCodeEnum.USER_RECORD_MORE);
+            return resp ;
+        }
+
+        SysUserInfo data = dataList.get(0);
+        if(!data.getPassword().trim().equals(Md5Util.md5(password))){
+            resp.build(RespCodeEnum.USER_PWD_NOT_CORRECT);
+            return resp ;
+        }
+
+        SysUserInfoDto dto = this.getSysUserInfoDto(data);
+        return resp.buildSuccess(dto);
+    }
+
+    @Override
+    public RespData<String> enable(SysUserInfoDto sysUserInfoDto) {
+        RespData<String> resp = new RespData<>();
+
+        RespData<SysUserInfo> check = this.checkById(sysUserInfoDto.getId());
+        if(!check.isSuccess()){
+            resp.clone(check);
+            return resp ;
+        }
+
+        SysUserInfo data = check.getData();
+        if(!data.getEnableStatus().trim().equals("enable")){
+            resp.build(RespCodeEnum.ENABLE_STATUS);
+            return resp ;
+        }
+
+        SysUserInfo updateVo = new SysUserInfo();
+        updateVo.setId(sysUserInfoDto.getId());
+        updateVo.setCreator(sysUserInfoDto.getCreator());
+        updateVo.setCreateTime(new Date(System.currentTimeMillis()));
+        updateVo.setEnableStatus("enable");
+
+        Integer affectRowNum = this.sysUserInfoMapper.updateById(updateVo);
+        return resp.getByAffectRowNum(affectRowNum);
+    }
+
+    @Override
+    public RespData<String> disable(SysUserInfoDto sysUserInfoDto) {
+        RespData<String> resp = new RespData<>();
+
+        RespData<SysUserInfo> check = this.checkById(sysUserInfoDto.getId());
+        if(!check.isSuccess()){
+            resp.clone(check);
+            return resp ;
+        }
+
+        SysUserInfo data = check.getData();
+        if(!data.getEnableStatus().trim().equals("disable")){
+            resp.build(RespCodeEnum.DISABLE_STATUS);
+            return resp ;
+        }
+
+        SysUserInfo updateVo = new SysUserInfo();
+        updateVo.setId(sysUserInfoDto.getId());
+        updateVo.setCreator(sysUserInfoDto.getCreator());
+        updateVo.setCreateTime(new Date(System.currentTimeMillis()));
+        updateVo.setEnableStatus("disable");
+
+        Integer affectRowNum = this.sysUserInfoMapper.updateById(updateVo);
+        return resp.getByAffectRowNum(affectRowNum);
+    }
+
+    @Override
+    public RespData<String> deleteById(SysUserInfoDto sysUserInfoDto) {
+        RespData<String> resp = new RespData<>();
+
+        RespData<SysUserInfo> check = this.checkById(sysUserInfoDto.getId());
+        if(!check.isSuccess()){
+            resp.clone(check);
+            return resp ;
+        }
+
+        SysUserInfo updateVo = new SysUserInfo();
+        updateVo.setId(sysUserInfoDto.getId());
+        updateVo.setCreator(sysUserInfoDto.getCreator());
+        updateVo.setCreateTime(new Date(System.currentTimeMillis()));
+        updateVo.setIsDeleted("Y");
+
+        Integer affectRowNum = this.sysUserInfoMapper.updateById(updateVo);
+        return resp.getByAffectRowNum(affectRowNum);
     }
 
     private List<SysUserInfoDto> transferList(List<SysUserInfo> dataList){

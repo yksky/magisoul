@@ -150,7 +150,17 @@ public class SysUserInfoApiImpl implements ISysUserInfoApi {
      */
     @Override
     public RespData<String> enable(SysUserInfoDto sysUserInfoDto) {
-        return null;
+        RespData<String> resp = new RespData<>();
+        try{
+            resp = this.sysUserInfoService.enable(sysUserInfoDto);
+            logger.info("类名:{},方法名:{},参数:[sysUserInfoDto:{}],启用用户正常,结果信息:{}",
+                    "SysUserInfoApiImpl","enable", JSON.toJSONString(sysUserInfoDto), JSON.toJSONString(resp));
+        }catch(Exception e){
+            logger.error("类名:{},方法名:{},参数:[sysUserInfoDto:{}],启用用户异常,异常信息:{}",
+                    "SysUserInfoApiImpl","enable", JSON.toJSONString(sysUserInfoDto), e);
+            resp.buildFail();
+        }
+        return resp ;
     }
 
     /**
@@ -161,17 +171,52 @@ public class SysUserInfoApiImpl implements ISysUserInfoApi {
      */
     @Override
     public RespData<String> disable(SysUserInfoDto sysUserInfoDto) {
-        return null;
+        RespData<String> resp = new RespData<>();
+        try{
+            resp = this.sysUserInfoService.disable(sysUserInfoDto);
+            logger.info("类名:{},方法名:{},参数:[sysUserInfoDto:{}],禁用用户正常,结果信息:{}",
+                    "SysUserInfoApiImpl","disable", JSON.toJSONString(sysUserInfoDto), JSON.toJSONString(resp));
+        }catch(Exception e){
+            logger.error("类名:{},方法名:{},参数:[sysUserInfoDto:{}],禁用用户异常,异常信息:{}",
+                    "SysUserInfoApiImpl","disable", JSON.toJSONString(sysUserInfoDto), e);
+            resp.buildFail();
+        }
+        return resp ;
     }
 
     /**
      * 删除该用户
      *
-     * @param id
+     * @param sysUserInfoDto
      * @return
      */
     @Override
-    public RespData<String> deleteById(Long id) {
-        return null;
+    public RespData<String> deleteById(SysUserInfoDto sysUserInfoDto) {
+        RespData<String> resp = new RespData<>();
+        try{
+            resp = this.sysUserInfoService.deleteById(sysUserInfoDto);
+            logger.info("类名:{},方法名:{},参数:[sysUserInfoDto:{}],删除用户正常,结果信息:{}",
+                    "SysUserInfoApiImpl","deleteById", JSON.toJSONString(sysUserInfoDto), JSON.toJSONString(resp));
+        }catch(Exception e){
+            logger.error("类名:{},方法名:{},参数:[sysUserInfoDto:{}],删除用户异常,异常信息:{}",
+                    "SysUserInfoApiImpl","deleteById", JSON.toJSONString(sysUserInfoDto), e);
+            resp.buildFail();
+        }
+        return resp ;
+    }
+
+    @Override
+    public RespData<SysUserInfoDto> login(String username, String password) {
+        RespData<SysUserInfoDto> resp = new RespData<>();
+        try{
+            resp = this.sysUserInfoService.login(username,password);
+            logger.info("类名:{},方法名:{},参数:[username:{},password:{}],登录正常,结果信息:{}",
+                    "SysUserInfoApiImpl","login", username, password, JSON.toJSONString(resp));
+        }catch(Exception e){
+            logger.error("类名:{},方法名:{},参数:[username:{},password:{}],登录异常,异常信息:{}",
+                    "SysUserInfoApiImpl","login", username, password, e);
+            resp.buildFail();
+        }
+        return resp ;
     }
 }
