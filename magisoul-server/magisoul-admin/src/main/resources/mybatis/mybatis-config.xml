@@ -15,6 +15,7 @@
         <typeAlias alias="SysUserDeptRp" type="org.magisoul.system.entity.SysUserDeptRp"/>
         <typeAlias alias="SysUserInfo" type="org.magisoul.system.entity.SysUserInfo"/>
         <typeAlias alias="SysUserRoleRp" type="org.magisoul.system.entity.SysUserRoleRp"/>
+        <typeAlias alias="SysToken" type="org.magisoul.system.entity.SysToken"/>
 
         <typeAlias alias="QuerySysDeptInfoVo" type="org.magisoul.system.model.query.QuerySysDeptInfoVo"/>
         <typeAlias alias="QuerySysDictInfoVo" type="org.magisoul.system.model.query.QuerySysDictInfoVo"/>

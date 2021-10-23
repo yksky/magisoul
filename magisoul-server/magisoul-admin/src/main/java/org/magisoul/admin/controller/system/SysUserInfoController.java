@@ -31,6 +31,12 @@ public class SysUserInfoController {
         return JSON.toJSONString(resp);
     }
 
+    @GetMapping("/getByToken")
+    public String getByToken(String token){
+        RespData<SysUserInfoDto> resp = this.sysUserInfoApi.getByToken(token);
+        return JSON.toJSONString(resp);
+    }
+
     @GetMapping("/pageList")
     public String pageList(QuerySysUserInfoVo querySysUserInfoVo){
         RespData<Pagination<SysUserInfoDto>> resp = this.sysUserInfoApi.pageList(querySysUserInfoVo);
