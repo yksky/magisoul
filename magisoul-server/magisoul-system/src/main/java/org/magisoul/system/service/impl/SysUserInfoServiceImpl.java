@@ -1,14 +1,13 @@
 package org.magisoul.system.service.impl;
 
+import org.magisoul.system.entity.SysToken;
 import org.magisoul.system.entity.SysUserInfo;
+import org.magisoul.system.mapper.ISysTokenMapper;
 import org.magisoul.system.mapper.ISysUserInfoMapper;
 import org.magisoul.system.model.dto.SysUserInfoDto;
 import org.magisoul.system.model.query.QuerySysUserInfoVo;
 import org.magisoul.system.service.ISysUserInfoService;
-import org.magisoul.util.CheckUtil;
-import org.magisoul.util.Dto2Entity;
-import org.magisoul.util.ObjectUtil;
-import org.magisoul.util.SnowflakeIdUtil;
+import org.magisoul.util.*;
 import org.magisoul.util.enums.RespCodeEnum;
 import org.magisoul.util.model.CheckParamVo;
 import org.magisoul.util.model.Pagination;
@@ -27,6 +26,8 @@ public class SysUserInfoServiceImpl implements ISysUserInfoService {
 
     @Autowired
     private ISysUserInfoMapper sysUserInfoMapper ;
+    @Autowired
+    private ISysTokenMapper sysTokenMapper ;
 
     @Override
     public RespData<String> add(SysUserInfoDto sysUserInfoDto) {
@@ -103,6 +104,70 @@ public class SysUserInfoServiceImpl implements ISysUserInfoService {
     }
 
     @Override
+    public RespData<SysUserInfoDto> getByToken(String token) {
+        RespData<SysUserInfoDto> resp = new RespData<>();
+
+        if(ObjectUtil.isEmpty(token)){
+            resp.build(RespCodeEnum.TOKEN_EMPTY);
+            return resp ;
+        }
+
+        SysToken sysToken = this.sysTokenMapper.getByToken(token);
+        if(sysToken==null){
+            resp.build(RespCodeEnum.TOKEN_INVALID);
+            return resp ;
+        }
+
+        long curTime = System.currentTimeMillis();
+        if(curTime>sysToken.getExpireTime()){
+            resp.build(RespCodeEnum.TOKEN_TTMEOUT);
+            return resp ;
+        }
+
+        Long userId = sysToken.getUserId();
+        RespData<SysUserInfo> check = this.checkById(userId);
+        if(!check.isSuccess()){
+            resp.clone(check);
+            return resp ;
+        }
+
+        SysUserInfo data = check.getData();
+        SysUserInfoDto dto = this.getSysUserInfoDto(data);
+
+        return resp.buildSuccess(dto) ;
+    }
+
+    @Override
+    public RespData<String> refreshToken(String token) {
+        RespData<String> resp = new RespData<>();
+
+        if(ObjectUtil.isEmpty(token)){
+            resp.build(RespCodeEnum.TOKEN_EMPTY);
+            return resp ;
+        }
+
+        SysToken sysToken = this.sysTokenMapper.getByToken(token);
+        if(sysToken==null){
+            resp.build(RespCodeEnum.TOKEN_INVALID);
+            return resp ;
+        }
+
+        long curTime = System.currentTimeMillis();
+        if(curTime>sysToken.getExpireTime()){
+            resp.build(RespCodeEnum.TOKEN_TTMEOUT);
+            return resp ;
+        }
+
+        //Token有效期30分钟
+        long expireTime = curTime + 30*60*1000L ;
+        SysToken updateVo = new SysToken();
+        updateVo.setToken(token);
+        updateVo.setExpireTime(expireTime);
+        Integer affectRowNum = this.sysTokenMapper.update(updateVo);
+        return resp.getByAffectRowNum(affectRowNum);
+    }
+
+    @Override
     public RespData<List<SysUserInfoDto>> list(QuerySysUserInfoVo querySysUserInfoVo) {
         RespData<List<SysUserInfoDto>> resp = new RespData<List<SysUserInfoDto>>();
 
@@ -126,8 +191,8 @@ public class SysUserInfoServiceImpl implements ISysUserInfoService {
     }
 
     @Override
-    public RespData<SysUserInfoDto> login(String username, String password) {
-        RespData<SysUserInfoDto> resp = new RespData<>();
+    public RespData<String> login(String username, String password) {
+        RespData<String> resp = new RespData<>();
 
         if(ObjectUtil.isEmpty(username) || ObjectUtil.isEmpty(password)){
             resp.build(RespCodeEnum.USER_NAME_PWD_EMPTY);
@@ -154,8 +219,26 @@ public class SysUserInfoServiceImpl implements ISysUserInfoService {
             return resp ;
         }
 
-        SysUserInfoDto dto = this.getSysUserInfoDto(data);
-        return resp.buildSuccess(dto);
+        //删除userId对应的记录
+        this.sysTokenMapper.deleteByUserId(data.getId());
+
+        //登录成功,赋值Token
+        String token = UUIDUtil.createUUID();
+        long expireTime = System.currentTimeMillis()+30*60*1000L;
+
+        SysToken sysToken = new SysToken();
+        sysToken.setToken(token);
+        sysToken.setUserId(data.getId());
+        sysToken.setId(new SnowflakeIdUtil(0,0).nextId());
+        sysToken.setExpireTime(expireTime);
+
+        Integer affectRowNum = this.sysTokenMapper.add(sysToken);
+        if(affectRowNum.intValue()>0){
+            resp.buildSuccess(token);
+        }else{
+            resp.buildFail();
+        }
+        return resp ;
     }
 
     @Override

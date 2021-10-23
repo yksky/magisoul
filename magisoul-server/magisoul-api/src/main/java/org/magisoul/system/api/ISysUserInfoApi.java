@@ -72,6 +72,11 @@ public interface ISysUserInfoApi {
      */
     public RespData<String> deleteById(SysUserInfoDto sysUserInfoDto);
 
-    public RespData<SysUserInfoDto> login(String username,String password);
+    public RespData<String> login(String username,String password);
+
+    //刷新Token
+    public RespData<String> refreshToken(String token);
+
+    public RespData<SysUserInfoDto> getByToken(String token);
 
 }

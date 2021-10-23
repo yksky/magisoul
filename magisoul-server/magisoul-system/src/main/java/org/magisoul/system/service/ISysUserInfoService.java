@@ -18,11 +18,15 @@ public interface ISysUserInfoService {
 
     public RespData<SysUserInfoDto> getById(Long id);
 
+    public RespData<SysUserInfoDto> getByToken(String token);
+
+    public RespData<String> refreshToken(String token);
+
     public RespData<List<SysUserInfoDto>> list(QuerySysUserInfoVo querySysUserInfoVo);
 
     public RespData<Pagination<SysUserInfoDto>> pageList(QuerySysUserInfoVo querySysUserInfoVo);
 
-    public RespData<SysUserInfoDto> login(String username,String password);
+    public RespData<String> login(String username,String password);
 
     public RespData<String> enable(SysUserInfoDto sysUserInfoDto);
 

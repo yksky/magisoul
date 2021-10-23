@@ -30,6 +30,12 @@ public enum RespCodeEnum {
     //session超时
     SESSION_TIMEOUT("900","登录超时"),
 
+    //Token
+    TOKEN_EMPTY("910","Token is empty"),
+    TOKEN_INVALID("911","Token invalid"),
+    TOKEN_TTMEOUT("912","Token timeout"),
+    TOKEN_USERID_EMPTY("913","Token userid empty"),
+
     //用户部分提示  暂定范围在1000-1100 之间
     USER_NOT_EXIST("1001","该用户不存在"),
     USER_DELETED("1002","该用户已经删除"),

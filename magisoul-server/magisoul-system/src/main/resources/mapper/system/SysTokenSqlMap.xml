@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.magisoul.system.mapper.ISysTokenMapper">
+
+    <resultMap type="SysToken" id="BaseResultMap">
+        <result column="id" property="id"/>
+        <result column="token" property="token"/>
+        <result column="user_id" property="userId"/>
+        <result column="expire_time" property="expireTime"/>
+    </resultMap>
+
+    <insert id="add" parameterType="SysToken">
+    <![CDATA[
+        insert into sys_token
+            (id, token, user_id, expire_time)
+        values (#{id}, #{token}, #{userId}, #{expireTime})
+        ]]>
+    </insert>
+
+    <delete id="deleteByToken">
+        delete from sys_token where token=#{token}
+    </delete>
+
+    <delete id="deleteByUserId">
+        delete from sys_token where user_id=#{userId}
+    </delete>
+
+    <update id="update" parameterType="SysToken">
+        update sys_token set expire_time=#{expireTime} where token=#{token}
+    </update>
+
+    <select id="getByToken" resultMap="BaseResultMap">
+        <![CDATA[
+         select id,token,user_id,expire_time
+         from sys_token
+         where token=#{token}
+        ]]>
+    </select>
+
+</mapper>

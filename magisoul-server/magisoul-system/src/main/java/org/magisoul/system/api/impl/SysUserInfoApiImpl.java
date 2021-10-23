@@ -206,8 +206,8 @@ public class SysUserInfoApiImpl implements ISysUserInfoApi {
     }
 
     @Override
-    public RespData<SysUserInfoDto> login(String username, String password) {
-        RespData<SysUserInfoDto> resp = new RespData<>();
+    public RespData<String> login(String username, String password) {
+        RespData<String> resp = new RespData<>();
         try{
             resp = this.sysUserInfoService.login(username,password);
             logger.info("类名:{},方法名:{},参数:[username:{},password:{}],登录正常,结果信息:{}",
@@ -215,6 +215,36 @@ public class SysUserInfoApiImpl implements ISysUserInfoApi {
         }catch(Exception e){
             logger.error("类名:{},方法名:{},参数:[username:{},password:{}],登录异常,异常信息:{}",
                     "SysUserInfoApiImpl","login", username, password, e);
+            resp.buildFail();
+        }
+        return resp ;
+    }
+
+    @Override
+    public RespData<String> refreshToken(String token) {
+        RespData<String> resp = new RespData<>();
+        try{
+            resp = this.sysUserInfoService.refreshToken(token);
+            logger.info("类名:{},方法名:{},参数:[token:{}],刷新Token正常,结果信息:{}",
+                    "SysUserInfoApiImpl","refreshToken", token, JSON.toJSONString(resp));
+        }catch(Exception e){
+            logger.error("类名:{},方法名:{},参数:[token:{}],刷新Token异常,异常信息:{}",
+                    "SysUserInfoApiImpl","refreshToken", token, e);
+            resp.buildFail();
+        }
+        return resp;
+    }
+
+    @Override
+    public RespData<SysUserInfoDto> getByToken(String token) {
+        RespData<SysUserInfoDto> resp = new RespData<>();
+        try{
+            resp = this.sysUserInfoService.getByToken(token);
+            logger.info("类名:{},方法名:{},参数:[token:{}],根据Token获取用户信息正常,结果信息:{}",
+                    "SysUserInfoApiImpl","getByToken", token, JSON.toJSONString(resp));
+        }catch(Exception e){
+            logger.error("类名:{},方法名:{},参数:[token:{}],根据Token获取用户信息异常,异常信息:{}",
+                    "SysUserInfoApiImpl","getByToken", token, e);
             resp.buildFail();
         }
         return resp ;

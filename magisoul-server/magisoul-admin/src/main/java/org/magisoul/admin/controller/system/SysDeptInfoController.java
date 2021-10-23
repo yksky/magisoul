@@ -49,7 +49,7 @@ public class SysDeptInfoController {
         return JSON.toJSONString(resp);
     }
 
-    @PostMapping("/enable")
+    @PostMapping("/disable")
     public String disable(SysDeptInfoDto sysDeptInfoDto){
         RespData<String> resp = this.sysDeptInfoApi.disable(sysDeptInfoDto);
         return JSON.toJSONString(resp);
