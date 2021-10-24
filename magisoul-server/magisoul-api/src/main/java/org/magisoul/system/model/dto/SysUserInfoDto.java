@@ -1,9 +1,13 @@
 package org.magisoul.system.model.dto;
 
+import com.alibaba.fastjson.annotation.JSONField;
+import com.alibaba.fastjson.serializer.ToStringSerializer;
+
 import java.util.Date;
 
 public class SysUserInfoDto {
 
+    @JSONField(serializeUsing = ToStringSerializer.class)
     private Long id ;
     private String username ;
     private String realname ;

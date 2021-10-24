@@ -96,7 +96,7 @@ export default {
       this.$router.push({ path: '/admin/user/add/'})
     },
     handleUpdate(row){
-      this.$router.push({ path: '/admin/user/edit?id='+row.id})
+      this.$router.push({ name: 'EditUser', params:{id:row.id}})
     },
     handleDelete(row){
 

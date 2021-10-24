@@ -14,6 +14,10 @@ import router from './router'
 
 import '@/icons' // icon
 import '@/permission' // permission control
+import Pagination from "@/components/Pagination";
+
+// 全局组件挂载
+Vue.component('Pagination', Pagination)
 
 /**
  * If you don't want to use mock-server

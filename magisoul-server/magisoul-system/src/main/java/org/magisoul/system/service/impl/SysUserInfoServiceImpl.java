@@ -46,6 +46,7 @@ public class SysUserInfoServiceImpl implements ISysUserInfoService {
         SysUserInfo data = checkForm.getData();
         data.setId(new SnowflakeIdUtil(0,0).nextId());
         //设置密码 todo
+        data.setPassword(Md5Util.md5("123456"));
 
         Integer affectRowNum = this.sysUserInfoMapper.add(data);
         return resp.getByAffectRowNum(affectRowNum);
@@ -70,6 +71,8 @@ public class SysUserInfoServiceImpl implements ISysUserInfoService {
             resp.clone(check);
             return resp ;
         }
+
+        data.setUpdateTime(new Date(System.currentTimeMillis()));
 
         Integer affectRowNum = this.sysUserInfoMapper.updateForm(data);
         return resp.getByAffectRowNum(affectRowNum);

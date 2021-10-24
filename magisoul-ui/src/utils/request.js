@@ -54,7 +54,7 @@ service.interceptors.response.use(
       })
 
       // 911:Token Invalid; 912: Token expired;
-      if (res.code === '911' || res.code === '912') {
+      if (res.code == '911' || res.code == '912') {
         // to re-login
         MessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
           confirmButtonText: 'Re-Login',

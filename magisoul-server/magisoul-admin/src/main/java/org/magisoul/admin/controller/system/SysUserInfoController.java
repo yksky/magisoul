@@ -1,16 +1,15 @@
 package org.magisoul.admin.controller.system;
 
 import com.alibaba.fastjson.JSON;
+import org.apache.catalina.User;
+import org.magisoul.admin.context.UserContext;
 import org.magisoul.system.api.ISysUserInfoApi;
 import org.magisoul.system.model.dto.SysUserInfoDto;
 import org.magisoul.system.model.query.QuerySysUserInfoVo;
 import org.magisoul.util.model.Pagination;
 import org.magisoul.util.model.RespData;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/admin/user")
@@ -20,7 +19,10 @@ public class SysUserInfoController {
     private ISysUserInfoApi sysUserInfoApi ;
 
     @PostMapping("/merge")
-    public String merge(SysUserInfoDto sysUserInfoDto){
+    public String merge(@RequestBody SysUserInfoDto sysUserInfoDto){
+        SysUserInfoDto loginDto = UserContext.getUser();
+        sysUserInfoDto.setCreator(loginDto.getUsername());
+        sysUserInfoDto.setUpdator(loginDto.getUsername());
         RespData<String> resp = this.sysUserInfoApi.mergeForm(sysUserInfoDto);
         return JSON.toJSONString(resp);
     }

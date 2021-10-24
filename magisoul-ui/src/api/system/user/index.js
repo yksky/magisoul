@@ -17,7 +17,7 @@ export function getById(id){
 
 export function add(data){
   return request({
-    url: '/admin/user/add',
+    url: '/admin/user/merge',
     method: 'post',
     data: data
   })
@@ -25,7 +25,7 @@ export function add(data){
 
 export function edit(data){
   return request({
-    url: '/admin/user/edit',
+    url: '/admin/user/merge',
     method: 'post',
     data: data
   })
