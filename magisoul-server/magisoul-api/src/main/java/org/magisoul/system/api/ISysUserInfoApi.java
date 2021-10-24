@@ -79,4 +79,7 @@ public interface ISysUserInfoApi {
 
     public RespData<SysUserInfoDto> getByToken(String token);
 
+    //登出
+    public RespData<String> logout(String token);
+
 }

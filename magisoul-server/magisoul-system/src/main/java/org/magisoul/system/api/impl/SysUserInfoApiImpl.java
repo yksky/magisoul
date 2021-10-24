@@ -249,4 +249,19 @@ public class SysUserInfoApiImpl implements ISysUserInfoApi {
         }
         return resp ;
     }
+
+    @Override
+    public RespData<String> logout(String token) {
+        RespData<String> resp = new RespData<>();
+        try{
+            resp = this.sysUserInfoService.logout(token);
+            logger.info("类名:{},方法名:{},参数:[token:{}],根据Token删除用户登录信息正常,结果信息:{}",
+                    "SysUserInfoApiImpl","logout", token, JSON.toJSONString(resp));
+        }catch(Exception e){
+            logger.error("类名:{},方法名:{},参数:[token:{}],根据Token删除用户登录信息异常,异常信息:{}",
+                    "SysUserInfoApiImpl","logout", token, e);
+            resp.buildFail();
+        }
+        return resp ;
+    }
 }

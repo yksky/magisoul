@@ -34,4 +34,6 @@ public interface ISysUserInfoService {
 
     public RespData<String> deleteById(SysUserInfoDto sysUserInfoDto);
 
+    public RespData<String> logout(String token);
+
 }

@@ -14,6 +14,7 @@ import org.magisoul.util.model.Pagination;
 import org.magisoul.util.model.RespData;
 import org.magisoul.util.security.Md5Util;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -28,6 +29,8 @@ public class SysUserInfoServiceImpl implements ISysUserInfoService {
     private ISysUserInfoMapper sysUserInfoMapper ;
     @Autowired
     private ISysTokenMapper sysTokenMapper ;
+    @Value("${login-timeout}")
+    private long loginTimeout ;
 
     @Override
     public RespData<String> add(SysUserInfoDto sysUserInfoDto) {
@@ -159,7 +162,7 @@ public class SysUserInfoServiceImpl implements ISysUserInfoService {
         }
 
         //Token有效期30分钟
-        long expireTime = curTime + 30*60*1000L ;
+        long expireTime = curTime + loginTimeout ;
         SysToken updateVo = new SysToken();
         updateVo.setToken(token);
         updateVo.setExpireTime(expireTime);
@@ -224,7 +227,7 @@ public class SysUserInfoServiceImpl implements ISysUserInfoService {
 
         //登录成功,赋值Token
         String token = UUIDUtil.createUUID();
-        long expireTime = System.currentTimeMillis()+30*60*1000L;
+        long expireTime = System.currentTimeMillis()+loginTimeout;
 
         SysToken sysToken = new SysToken();
         sysToken.setToken(token);
@@ -311,6 +314,19 @@ public class SysUserInfoServiceImpl implements ISysUserInfoService {
 
         Integer affectRowNum = this.sysUserInfoMapper.updateById(updateVo);
         return resp.getByAffectRowNum(affectRowNum);
+    }
+
+    @Override
+    public RespData<String> logout(String token) {
+        RespData<String> resp = new RespData<>();
+
+        //登出操作,对于token而言,是清除操作.如果对应的Token存在,则删除
+        //同时客户端会进行cookie清除
+        if(!ObjectUtil.isEmpty(token)){
+            this.sysTokenMapper.deleteByToken(token);
+        }
+
+        return resp.buildSuccess();
     }
 
     private List<SysUserInfoDto> transferList(List<SysUserInfo> dataList){

@@ -27,8 +27,9 @@ public class HomeController {
     }
 
     @RequestMapping("/logout")
-    public String logout(){
-        return "";
+    public String logout(String token){
+        RespData<String> resp = this.sysUserInfoApi.logout(token);
+        return JSON.toJSONString(resp);
     }
 
     @RequestMapping("/refreshToken")

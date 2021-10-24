@@ -54,7 +54,27 @@ export const constantRoutes = [
       meta: { title: 'Dashboard', icon: 'dashboard' }
     }]
   },
-
+  //系统管理 二级菜单
+  {
+    path: '/admin',
+    component: Layout,
+    name: '系统管理',
+    meta: {title: '系统管理'},
+    children: [
+      {path: 'user/list',component: () => import('@/views/system/user/list'),name: 'UserList',
+       meta: {title:'用户管理'}},
+      {path: 'user/add',component: () => import('@/views/system/user/add'),name: 'AddUser',
+       meta: {title:'用户新增',noCache: true},hidden: true},
+      {path: 'user/edit',component: () => import('@/views/system/user/edit'),name: 'EditUser',
+       meta: {title:'用户编辑',noCache: true},hidden: true},
+      {path: 'dept/list',component: () => import('@/views/system/dept/list'),name: 'DeptList',
+        meta: {title:'部门管理'}},
+      {path: 'dept/add',component: () => import('@/views/system/dept/add'),name: 'AddDept',
+        meta: {title:'部门新增',noCache: true},hidden: true},
+      {path: 'dept/edit',component: () => import('@/views/system/dept/edit'),name: 'EditDept',
+        meta: {title:'部门编辑',noCache: true},hidden: true},
+    ]
+  },
   {
     path: '/example',
     component: Layout,

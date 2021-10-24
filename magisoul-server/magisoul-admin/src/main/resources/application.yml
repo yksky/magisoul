@@ -44,3 +44,5 @@ spring:
   #type-aliases-package: org.magisoul.**.entity
   #mapper-locations: classpath*:mapper/**/*SqlMap.xml
   #config-location: classpath:mybatis/mybatis-config.xml
+
+login-timeout: 1800000
