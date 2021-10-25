@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.magisoul.gcode.mapper.IGcDbConfigInfoMapper">
+
+    <resultMap type="GcDbConfigInfo" id="BaseResultMap">
+        <result column="id" property="id"/>
+        <result column="db_url" property="dbUrl"/>
+        <result column="db_password" property="dbPassword"/>
+        <result column="db_driver" property="dbDriver"/>
+        <result column="db_username" property="dbUsername"/>
+        <result column="db_type" property="dbType"/>
+        <result column="db_app_name" property="dbAppName"/>
+        <result column="enable_status" property="enableStatus"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="create_time" property="createTime"/>
+        <result column="creator" property="creator"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="updator" property="updator"/>
+    </resultMap>
+
+    <insert id="add" parameterType="GcDbConfigInfo">
+    <![CDATA[
+        insert into gc_db_config_info
+        (id, db_url, db_password, db_driver, db_username, db_type, db_app_name, enable_status, is_deleted,
+         create_time, creator, update_time, updator)
+        values (#{id}, #{dbUrl}, #{dbPassword}, #{dbDriver}, #{dbUsername}, #{dbType}, #{dbAppName}, #{enableStatus}, #{isDeleted},
+                #{createTime}, #{creator}, #{updateTime}, #{updator})
+        ]]>
+    </insert>
+
+    <update id="updateForm" parameterType="GcDbConfigInfo">
+        update gc_db_config_info
+        set db_url=#{dbUrl},
+            db_password=#{dbPassword},
+            db_username=#{dbUsername},
+            db_driver=#{dbDriver},
+            db_type = #{dbType},
+            db_app_name = #{dbAppName},
+            enable_status=#{enableStatus},
+            update_time=#{updateTime},
+            updator=#{updator}
+        where id=#{id}
+    </update>
+
+    <update id="updateById" parameterType="GcDbConfigInfo">
+        update gc_db_config_info
+        <set>
+            <if test="dbPassword!=null and dbPassword!=''"><![CDATA[ db_password=#{dbPassword}, ]]></if>
+            <if test="dbUrl!=null and dbUrl!=''"><![CDATA[ db_url=#{dbUrl}, ]]></if>
+            <if test="dbDriver!=null and dbDriver!=''"><![CDATA[ dbDriver=#{dbDriver}, ]]></if>
+            <if test="dbUsername!=null and dbUsername!=''"><![CDATA[ dbUsername=#{dbUsername}, ]]></if>
+            <if test="dbAppName!=null and dbAppName!=''"><![CDATA[ db_app_name=#{dbAppName}, ]]></if>
+            <if test="dbType!=null and dbType!=''"><![CDATA[ db_type=#{dbType}, ]]></if>
+            <if test="enableStatus!=null and enableStatus!=''"><![CDATA[ enable_status=#{enableStatus}, ]]></if>
+            <if test="isDeleted!=null and isDeleted!=''"><![CDATA[ is_deleted=#{isDeleted}, ]]></if>
+            <if test="updateTime!=null"><![CDATA[ update_time=#{updateTime}, ]]></if>
+            <if test="updator!=null and updator!=''"><![CDATA[ updator=#{updator}, ]]></if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <select id="getById" resultMap="BaseResultMap">
+        select id, db_url, db_password, db_driver, db_username, db_type, db_app_name, enable_status, is_deleted,
+               create_time, creator, update_time, updator
+          from gc_db_config_info
+         where id=#{id}
+    </select>
+
+    <select id="list" parameterType="QueryGcDbConfigInfoVo" resultMap="BaseResultMap">
+        <![CDATA[
+        select id, db_url, db_password, db_driver, db_username, db_type, db_app_name, enable_status, is_deleted,
+               create_time, creator, update_time, updator
+          from gc_db_config_info
+         where 1=1
+        ]]>
+        <if test="dbType!=null and dbType!=''"><![CDATA[ and db_type=#{dbType} ]]></if>
+        <if test="enableStatus!=null and enableStatus!=''"><![CDATA[ and enable_status=#{enableStatus} ]]></if>
+        <if test="isDeleted!=null and isDeleted!=''"><![CDATA[ and is_deleted=#{isDeleted} ]]></if>
+        order by update_time desc
+        <if test="start!=null and offset!=null"><![CDATA[ limit #{start},#{offset}]]></if>
+    </select>
+
+    <select id="count" parameterType="QueryGcDbConfigInfoVo" resultType="java.lang.Long">
+        select count(1) from gc_db_config_info where 1=1
+        <if test="dbType!=null and dbType!=''"><![CDATA[ and db_type=#{dbType} ]]></if>
+        <if test="enableStatus!=null and enableStatus!=''"><![CDATA[ and enable_status=#{enableStatus} ]]></if>
+        <if test="isDeleted!=null and isDeleted!=''"><![CDATA[ and is_deleted=#{isDeleted} ]]></if>
+    </select>
+
+    <select id="getExistByName" resultMap="BaseResultMap">
+        <![CDATA[
+        select id, db_url, db_password, db_driver, db_username, db_type, db_app_name, enable_status, is_deleted,
+               create_time, creator, update_time, updator
+          from gc_db_config_info
+         where 1=1
+        ]]>
+        <if test="id!=null"><![CDATA[ and id<>#{id}]]></if>
+        <if test="dbAppName!=null and dbAppName!=''"><![CDATA[ and db_app_name=#{dbAppName} ]]></if>
+    </select>
+
+</mapper>

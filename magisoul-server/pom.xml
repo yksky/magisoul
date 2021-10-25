@@ -19,6 +19,7 @@
         <module>magisoul-framework</module>
         <module>magisoul-cache</module>
         <module>magisoul-system</module>
+        <module>magisoul-gcode</module>
     </modules>
 
     <properties>
