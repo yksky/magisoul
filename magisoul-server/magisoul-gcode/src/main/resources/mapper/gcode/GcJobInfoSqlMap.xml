@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.magisoul.gcode.mapper.IGcJobInfoMapper">
+
+    <resultMap type="GcJobInfo" id="BaseResultMap">
+        <result column="id" property="id"/>
+        <result column="db_config_id" property="dbConfigId"/>
+        <result column="job_name" property="jobName"/>
+        <result column="project_name" property="projectName"/>
+        <result column="ui_type" property="uiType"/>
+        <result column="tech_type" property="techType"/>
+        <result column="gc_type" property="gcType"/>
+        <result column="gc_path" property="gcPath"/>
+        <result column="group_id" property="group_id"/>
+        <result column="artifact_id" property="artifactId"/>
+        <result column="version" property="version"/>
+        <result column="enable_status" property="enableStatus"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="create_time" property="createTime"/>
+        <result column="creator" property="creator"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="updator" property="updator"/>
+    </resultMap>
+
+    <insert id="add" parameterType="GcJobInfo">
+    <![CDATA[
+        insert into gc_job_info
+        (id, db_config_id, job_name, project_name, ui_type, tech_type, gc_type, gc_path, group_id, artifact_id, version,
+         enable_status, is_deleted,create_time, creator, update_time, updator)
+        values (#{id}, #{dbConfigId}, #{jobName}, #{projectName}, #{uiType}, #{techType}, #{gcType}, #{gcPath}, #{groupId},#{artifactId}, #{version},
+                #{enableStatus}, #{isDeleted},#{createTime}, #{creator}, #{updateTime}, #{updator})
+        ]]>
+    </insert>
+
+    <update id="updateForm" parameterType="GcJobInfo">
+        update gc_job_info
+        set db_config_id=#{dbConfigId},
+            job_name=#{jobName},
+            project_name=#{projectName},
+            ui_type=#{uiType},
+            tech_type=#{techType},
+            gc_type=#{gcType},
+            gc_path=#{gcPath},
+            group_id=#{groupId},
+            artifact_id=#{artifactId},
+            version=#{version},
+            enable_status=#{enableStatus},
+            update_time=#{updateTime},
+            updator=#{updator}
+        where id=#{id}
+    </update>
+
+    <update id="updateById" parameterType="GcJobInfo">
+        update gc_job_info
+        <set>
+            <if test="dbConfigId!=null"><![CDATA[ db_config_id=#{dbConfigId}, ]]></if>
+            <if test="jobName!=null and jobName!=''"><![CDATA[ job_name=#{jobName}, ]]></if>
+            <if test="project_name!=null and projectName!=''"><![CDATA[ project_name=#{projectName}, ]]></if>
+            <if test="uiType!=null and uiType!=''"><![CDATA[ ui_type=#{uiType}, ]]></if>
+            <if test="techType!=null and techType!=''"><![CDATA[ tech_type=#{techType}, ]]></if>
+            <if test="gcType!=null and gcType!=''"><![CDATA[ gc_type=#{gcType}, ]]></if>
+            <if test="gcPath!=null and gcPath!=''"><![CDATA[ gc_path=#{gcPath}, ]]></if>
+            <if test="groupId!=null and groupId!=''"><![CDATA[ group_id=#{groupId}, ]]></if>
+            <if test="artifactId!=null and artifactId!=''"><![CDATA[ artifact_id=#{artifactId}, ]]></if>
+            <if test="version!=null and version!=''"><![CDATA[ version=#{version}, ]]></if>
+            <if test="enableStatus!=null and enableStatus!=''"><![CDATA[ enable_status=#{enableStatus}, ]]></if>
+            <if test="isDeleted!=null and isDeleted!=''"><![CDATA[ is_deleted=#{isDeleted}, ]]></if>
+            <if test="updateTime!=null"><![CDATA[ update_time=#{updateTime}, ]]></if>
+            <if test="updator!=null and updator!=''"><![CDATA[ updator=#{updator}, ]]></if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <select id="getById" resultMap="BaseResultMap">
+        select id, db_config_id, job_name, project_name, ui_type, tech_type, gc_type, gc_path, group_id, artifact_id, version,
+               enable_status, is_deleted,create_time, creator, update_time, updator
+        from gc_job_info
+        where id=#{id}
+    </select>
+
+    <select id="list" parameterType="QueryGcJobInfoVo" resultMap="BaseResultMap">
+        <![CDATA[
+        select id, db_config_id, job_name, project_name, ui_type, tech_type, gc_type, gc_path, group_id, artifact_id, version,
+               enable_status, is_deleted,create_time, creator, update_time, updator
+        from gc_job_info
+         where 1=1
+        ]]>
+        <if test="dbConfigId!=null"><![CDATA[ and db_config_id=#{dbConfigId} ]]></if>
+        <if test="enableStatus!=null and enableStatus!=''"><![CDATA[ and enable_status=#{enableStatus} ]]></if>
+        <if test="isDeleted!=null and isDeleted!=''"><![CDATA[ and is_deleted=#{isDeleted} ]]></if>
+        order by update_time desc
+        <if test="start!=null and offset!=null"><![CDATA[ limit #{start},#{offset}]]></if>
+    </select>
+
+    <select id="count" parameterType="QueryGcJobInfoVo" resultType="java.lang.Long">
+        select count(1) from gc_job_info where 1=1
+        <if test="dbConfigId!=null"><![CDATA[ and db_config_id=#{dbConfigId} ]]></if>
+        <if test="enableStatus!=null and enableStatus!=''"><![CDATA[ and enable_status=#{enableStatus} ]]></if>
+        <if test="isDeleted!=null and isDeleted!=''"><![CDATA[ and is_deleted=#{isDeleted} ]]></if>
+    </select>
+
+    <select id="getExistByName" resultMap="BaseResultMap">
+        <![CDATA[
+        select id, db_config_id, job_name, project_name, ui_type, tech_type, gc_type, gc_path, group_id, artifact_id, version,
+               enable_status, is_deleted,create_time, creator, update_time, updator
+          from gc_job_info
+         where 1=1
+        ]]>
+        <if test="id!=null"><![CDATA[ and id<>#{id}]]></if>
+        <if test="jobName!=null and jobName!=''"><![CDATA[ and job_name=#{jobName} ]]></if>
+    </select>
+
+</mapper>

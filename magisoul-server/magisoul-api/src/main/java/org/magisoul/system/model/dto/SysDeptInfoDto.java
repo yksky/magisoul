@@ -1,9 +1,13 @@
 package org.magisoul.system.model.dto;
 
+import com.alibaba.fastjson.annotation.JSONField;
+import com.alibaba.fastjson.serializer.ToStringSerializer;
+
 import java.util.Date;
 
 public class SysDeptInfoDto {
 
+    @JSONField(serializeUsing = ToStringSerializer.class)
     private Long id ;
     private String deptName ;
     private Long parentId ;

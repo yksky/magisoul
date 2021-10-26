@@ -7,6 +7,7 @@
         <property name="dialect" value="MYSQL"/>
     </properties>
     <typeAliases>
+        <!-- system -->
         <typeAlias alias="SysDeptInfo" type="org.magisoul.system.entity.SysDeptInfo"/>
         <typeAlias alias="SysDictInfo" type="org.magisoul.system.entity.SysDictInfo"/>
         <typeAlias alias="SysDictItemInfo" type="org.magisoul.system.entity.SysDictItemInfo"/>
@@ -23,5 +24,12 @@
         <typeAlias alias="QuerySysResourceInfoVo" type="org.magisoul.system.model.query.QuerySysResourceInfoVo"/>
         <typeAlias alias="QuerySysRoleInfoVo" type="org.magisoul.system.model.query.QuerySysRoleInfoVo"/>
         <typeAlias alias="QuerySysUserInfoVo" type="org.magisoul.system.model.query.QuerySysUserInfoVo"/>
+
+        <!-- gcode -->
+        <typeAlias alias="GcDbConfigInfo" type="org.magisoul.gcode.entity.GcDbConfigInfo"/>
+        <typeAlias alias="GcJobInfo" type="org.magisoul.gcode.entity.GcJobInfo"/>
+
+        <typeAlias alias="QueryGcDbConfigInfoVo" type="org.magisoul.gcode.model.query.QueryGcDbConfigInfoVoVo"/>
+        <typeAlias alias="QueryGcJobInfoVo" type="org.magisoul.gcode.model.query.QueryGcJobInfoVo"/>
     </typeAliases>
 </configuration>
