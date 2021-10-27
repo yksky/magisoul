@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.magisoul.gcode.mapper.IGcTableInfoMapper">
+
+    <resultMap type="GcTableInfo" id="BaseResultMap">
+        <result column="id" property="id"/>
+        <result column="job_id" property="jobId"/>
+        <result column="name" property="name"/>
+        <result column="comment" property="comment"/>
+        <result column="alias_name" property="aliasName"/>
+        <result column="class_name" property="className"/>
+        <result column="entity_name" property="entityName"/>
+        <result column="primary_field_name" property="primaryFieldName"/>
+        <result column="is_nav" property="isNav"/>
+        <result column="module_id" property="moduleId"/>
+        <result column="nav_name" property="navName"/>
+        <result column="add_url" property="addUrl"/>
+        <result column="edit_url" property="editUrl"/>
+        <result column="delete_url" property="deleteUrl"/>
+        <result column="list_url" property="listUrl"/>
+        <result column="get_url" property="getUrl"/>
+        <result column="disable_url" property="disableUrl"/>
+        <result column="enable_url" property="enableUrl"/>
+        <result column="delete_type" property="deleteType"/>
+        <result column="enable_status" property="enableStatus"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="create_time" property="createTime"/>
+        <result column="creator" property="creator"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="updator" property="updator"/>
+    </resultMap>
+
+    <insert id="add" parameterType="GcTableInfo">
+    <![CDATA[
+        insert into gc_table_info
+        (id, job_id, name, comment, alias_name, class_name, entity_name, primary_field_name, is_nav, module_id, nav_name,
+         add_url, edit_url, delete_url, list_url, get_url, disable_url, enable_url, delete_type,
+         enable_status, is_deleted,create_time, creator, update_time, updator)
+        values (#{id}, #{jobId}, #{name}, #{comment}, #{aliasName}, #{className}, #{entityName}, #{primaryFieldName}, #{isNav},#{moduleId}, #{navName},
+                #{addUrl}, #{editUrl}, #{deleteUrl}, #{listUrl}, #{getUrl}, #{disableUrl}, #{enableUrl}, #{deleteType},
+                #{enableStatus}, #{isDeleted},#{createTime}, #{creator}, #{updateTime}, #{updator})
+        ]]>
+    </insert>
+
+    <update id="updateForm" parameterType="GcTableInfo">
+        update gc_table_info
+        set name=#{name},
+            comment=#{comment},
+            alias_name=#{aliasName},
+            class_name=#{className},
+            entity_name=#{entityName},
+            primary_field_name=#{primaryFieldName},
+            is_nav=#{isNav},
+            module_id=#{moduleId},
+            nav_name=#{navName},
+            add_url=#{addUrl},
+            edit_url=#{editUrl},
+            delete_url=#{deleteUrl},
+            list_url=#{listUrl},
+            get_url=#{getUrl},
+            disable_url=#{disableUrl},
+            enable_url=#{enableUrl},
+            delete_type=#{deleteType},
+            enable_status=#{enableStatus},
+            update_time=#{updateTime},
+            updator=#{updator}
+        where id=#{id}
+    </update>
+
+    <update id="updateById" parameterType="GcTableInfo">
+        update gc_job_info
+        <set>
+            <if test="name!=null and name!=''"><![CDATA[ name=#{name}, ]]></if>
+            <if test="comment!=null and comment!=''"><![CDATA[ comment=#{comment}, ]]></if>
+            <if test="aliasName!=null and aliasName!=''"><![CDATA[ alias_name=#{aliasName}, ]]></if>
+            <if test="className!=null and className!=''"><![CDATA[ class_name=#{className}, ]]></if>
+            <if test="entityName!=null and entityName!=''"><![CDATA[ entity_name=#{entityName}, ]]></if>
+            <if test="primaryFieldName!=null and primaryFieldName!=''"><![CDATA[ primary_field_name=#{primaryFieldName}, ]]></if>
+            <if test="isNav!=null and isNav!=''"><![CDATA[ is_nav=#{isNav}, ]]></if>
+            <if test="moduleId!=null"><![CDATA[ module_id=#{moduleId}, ]]></if>
+            <if test="navName!=null and navName!=''"><![CDATA[ nav_name=#{navName}, ]]></if>
+            <if test="addUrl!=null and addUrl!=''"><![CDATA[ add_url=#{addUrl}, ]]></if>
+            <if test="editUrl!=null and editUrl!=''"><![CDATA[ edit_url=#{editUrl}, ]]></if>
+            <if test="deleteUrl!=null and deleteUrl!=''"><![CDATA[ delete_url=#{deleteUrl}, ]]></if>
+            <if test="listUrl!=null and listUrl!=''"><![CDATA[ list_url=#{listUrl}, ]]></if>
+            <if test="getUrl!=null and getUrl!=''"><![CDATA[ get_url=#{getUrl}, ]]></if>
+            <if test="disableUrl!=null and disableUrl!=''"><![CDATA[ disable_url=#{disableUrl}, ]]></if>
+            <if test="enableUrl!=null and enableUrl!=''"><![CDATA[ enable_url=#{enableUrl}, ]]></if>
+            <if test="deleteType!=null and deleteType!=''"><![CDATA[ delete_type=#{deleteType}, ]]></if>
+            <if test="enableStatus!=null and enableStatus!=''"><![CDATA[ enable_status=#{enableStatus}, ]]></if>
+            <if test="isDeleted!=null and isDeleted!=''"><![CDATA[ is_deleted=#{isDeleted}, ]]></if>
+            <if test="updateTime!=null"><![CDATA[ update_time=#{updateTime}, ]]></if>
+            <if test="updator!=null and updator!=''"><![CDATA[ updator=#{updator}, ]]></if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <select id="getById" resultMap="BaseResultMap">
+        select id, job_id, name, comment, alias_name, class_name, entity_name, primary_field_name, is_nav, module_id, nav_name,
+               add_url, edit_url, delete_url, list_url, get_url, disable_url, enable_url, delete_type,
+               enable_status, is_deleted,create_time, creator, update_time, updator
+          from gc_table_info
+         where id=#{id}
+    </select>
+
+    <select id="list" parameterType="QueryGcTableInfoVo" resultMap="BaseResultMap">
+        <![CDATA[
+        select id, job_id, name, comment, alias_name, class_name, entity_name, primary_field_name, is_nav, module_id, nav_name,
+               add_url, edit_url, delete_url, list_url, get_url, disable_url, enable_url, delete_type,
+               enable_status, is_deleted,create_time, creator, update_time, updator
+          from gc_table_info
+         where 1=1
+        ]]>
+        <if test="jobId!=null"><![CDATA[ and job_id=#{jobId} ]]></if>
+        <if test="moduleId!=null"><![CDATA[ and module_id=#{moduleId} ]]></if>
+        <if test="enableStatus!=null and enableStatus!=''"><![CDATA[ and enable_status=#{enableStatus} ]]></if>
+        <if test="isDeleted!=null and isDeleted!=''"><![CDATA[ and is_deleted=#{isDeleted} ]]></if>
+        order by update_time desc
+        <if test="start!=null and offset!=null"><![CDATA[ limit #{start},#{offset}]]></if>
+    </select>
+
+    <select id="count" parameterType="QueryGcTableInfoVo" resultType="java.lang.Long">
+        select count(1) from gc_table_info where 1=1
+        <if test="jobId!=null"><![CDATA[ and job_id=#{jobId} ]]></if>
+        <if test="moduleId!=null"><![CDATA[ and module_id=#{moduleId} ]]></if>
+        <if test="enableStatus!=null and enableStatus!=''"><![CDATA[ and enable_status=#{enableStatus} ]]></if>
+        <if test="isDeleted!=null and isDeleted!=''"><![CDATA[ and is_deleted=#{isDeleted} ]]></if>
+    </select>
+
+</mapper>
