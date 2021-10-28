@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.magisoul.gcode.mapper.IGcModuleInfoMapper">
+
+    <resultMap type="GcModuleInfo" id="BaseResultMap">
+        <result column="id" property="id"/>
+        <result column="job_id" property="jobId"/>
+        <result column="module_name" property="moduleName"/>
+        <result column="module_code" property="moduleCode"/>
+        <result column="enable_status" property="enableStatus"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="create_time" property="createTime"/>
+        <result column="creator" property="creator"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="updator" property="updator"/>
+    </resultMap>
+
+    <insert id="add" parameterType="GcModuleInfo">
+    <![CDATA[
+        insert into gc_module_info
+        (id, job_id, module_name, module_code, enable_status, is_deleted,create_time, creator, update_time, updator)
+        values (#{id}, #{jobId}, #{moduleName}, #{moduleCode}, #{enableStatus}, #{isDeleted},#{createTime}, #{creator}, #{updateTime}, #{updator})
+        ]]>
+    </insert>
+
+    <update id="updateForm" parameterType="GcModuleInfo">
+        update gc_module_info
+        set module_name=#{moduleName},
+            module_code=#{moduleCode},
+            enable_status=#{enableStatus},
+            update_time=#{updateTime},
+            updator=#{updator}
+        where id=#{id}
+    </update>
+
+    <update id="updateById" parameterType="GcModuleInfo">
+        update gc_module_info
+        <set>
+            <if test="moduleName!=null and moduleName!=''"><![CDATA[ module_name=#{moduleName}, ]]></if>
+            <if test="moduleCode!=null and moduleCode!=''"><![CDATA[ module_code=#{moduleCode}, ]]></if>
+            <if test="enableStatus!=null and enableStatus!=''"><![CDATA[ enable_status=#{enableStatus}, ]]></if>
+            <if test="isDeleted!=null and isDeleted!=''"><![CDATA[ is_deleted=#{isDeleted}, ]]></if>
+            <if test="updateTime!=null"><![CDATA[ update_time=#{updateTime}, ]]></if>
+            <if test="updator!=null and updator!=''"><![CDATA[ updator=#{updator}, ]]></if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <select id="getById" resultMap="BaseResultMap">
+        select id, job_id, module_name, module_code, enable_status, is_deleted,create_time, creator, update_time, updator
+          from gc_module_info
+         where id=#{id}
+    </select>
+
+    <select id="list" parameterType="QueryGcModuleInfoVo" resultMap="BaseResultMap">
+        <![CDATA[
+        select id, job_id, module_name, module_code, enable_status, is_deleted,create_time, creator, update_time, updator
+          from gc_module_info
+         where 1=1
+        ]]>
+        <if test="jobId!=null"><![CDATA[ and job_id=#{jobId} ]]></if>
+        <if test="enableStatus!=null and enableStatus!=''"><![CDATA[ and enable_status=#{enableStatus} ]]></if>
+        <if test="isDeleted!=null and isDeleted!=''"><![CDATA[ and is_deleted=#{isDeleted} ]]></if>
+        order by update_time desc
+        <if test="start!=null and offset!=null"><![CDATA[ limit #{start},#{offset}]]></if>
+    </select>
+
+    <select id="count" parameterType="QueryGcModuleInfoVo" resultType="java.lang.Long">
+        select count(1) from gc_module_info where 1=1
+        <if test="jobId!=null"><![CDATA[ and job_id=#{jobId} ]]></if>
+        <if test="enableStatus!=null and enableStatus!=''"><![CDATA[ and enable_status=#{enableStatus} ]]></if>
+        <if test="isDeleted!=null and isDeleted!=''"><![CDATA[ and is_deleted=#{isDeleted} ]]></if>
+    </select>
+
+    <select id="getExistByName" resultMap="BaseResultMap">
+        <![CDATA[
+        select id, job_id, module_name, module_code, enable_status, is_deleted,create_time, creator, update_time, updator
+          from gc_module_info
+         where 1=1
+        ]]>
+        <if test="id!=null"><![CDATA[ and id<>#{id}]]></if>
+        <if test="moduleName!=null and moduleName!=''"><![CDATA[ and moduleName=#{moduleName} ]]></if>
+    </select>
+
+    <select id="getExistByCode" resultMap="BaseResultMap">
+        <![CDATA[
+        select id, job_id, module_name, module_code, enable_status, is_deleted,create_time, creator, update_time, updator
+          from gc_module_info
+         where 1=1
+        ]]>
+        <if test="id!=null"><![CDATA[ and id<>#{id}]]></if>
+        <if test="moduleCode!=null and moduleCode!=''"><![CDATA[ and moduleCode=#{moduleCode} ]]></if>
+    </select>
+
+</mapper>

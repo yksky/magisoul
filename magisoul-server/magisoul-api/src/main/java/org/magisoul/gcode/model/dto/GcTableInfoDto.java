@@ -1,10 +1,15 @@
 package org.magisoul.gcode.model.dto;
 
+import com.alibaba.fastjson.annotation.JSONField;
+import com.alibaba.fastjson.serializer.ToStringSerializer;
+
 import java.util.Date;
 
 public class GcTableInfoDto {
 
+    @JSONField(serializeUsing = ToStringSerializer.class)
     private Long id ;
+    @JSONField(serializeUsing = ToStringSerializer.class)
     private Long jobId ;
     private String name ;
     private String comment ;

@@ -22,4 +22,6 @@ public interface IGcModuleInfoMapper {
 
     public List<GcModuleInfo> getExistByName(@Param("id")Long id,@Param("moduleName")String moduleName);
 
+    public List<GcModuleInfo> getExistByCode(@Param("id")Long id,@Param("moduleCode")String moduleCode);
+
 }

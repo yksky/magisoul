@@ -29,9 +29,13 @@
         <typeAlias alias="GcDbConfigInfo" type="org.magisoul.gcode.entity.GcDbConfigInfo"/>
         <typeAlias alias="GcJobInfo" type="org.magisoul.gcode.entity.GcJobInfo"/>
         <typeAlias alias="GcTableInfo" type="org.magisoul.gcode.entity.GcTableInfo"/>
+        <typeAlias alias="GcFieldInfo" type="org.magisoul.gcode.entity.GcFieldInfo"/>
+        <typeAlias alias="GcModuleInfo" type="org.magisoul.gcode.entity.GcModuleInfo"/>
 
         <typeAlias alias="QueryGcDbConfigInfoVo" type="org.magisoul.gcode.model.query.QueryGcDbConfigInfoVoVo"/>
         <typeAlias alias="QueryGcJobInfoVo" type="org.magisoul.gcode.model.query.QueryGcJobInfoVo"/>
         <typeAlias alias="QueryGcTableInfoVo" type="org.magisoul.gcode.model.query.QueryGcTableInfoVo"/>
+        <typeAlias alias="QueryGcFieldInfoVo" type="org.magisoul.gcode.model.query.QueryGcFieldInfoVo"/>
+        <typeAlias alias="QueryGcModuleInfoVo" type="org.magisoul.gcode.model.query.QueryGcModuleInfoVo"/>
     </typeAliases>
 </configuration>
