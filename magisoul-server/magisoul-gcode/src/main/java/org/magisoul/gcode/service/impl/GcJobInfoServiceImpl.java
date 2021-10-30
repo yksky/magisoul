@@ -1,8 +1,10 @@
 package org.magisoul.gcode.service.impl;
 
 import org.magisoul.gcode.entity.GcJobInfo;
+import org.magisoul.gcode.jdbc.BaseDao;
+import org.magisoul.gcode.jdbc.GcodeDao;
+import org.magisoul.gcode.jdbc.JdbcModel;
 import org.magisoul.gcode.mapper.IGcJobInfoMapper;
-import org.magisoul.gcode.model.dto.GcDbConfigInfoDto;
 import org.magisoul.gcode.model.dto.GcJobInfoDto;
 import org.magisoul.gcode.model.query.QueryGcJobInfoVo;
 import org.magisoul.gcode.service.IGcJobInfoService;
@@ -27,6 +29,9 @@ public class GcJobInfoServiceImpl implements IGcJobInfoService {
 
     @Autowired
     private IGcJobInfoMapper gcJobInfoMapper ;
+
+    @Autowired
+    private BaseDao baseDao ;
 
     @Override
     public RespData<String> add(GcJobInfoDto gcJobInfoDto) {
@@ -125,6 +130,32 @@ public class GcJobInfoServiceImpl implements IGcJobInfoService {
     @Override
     public RespData<String> deleteById(GcJobInfoDto gcJobInfoDto) {
         return null;
+    }
+
+    @Override
+    public RespData<String> init(Long id) {
+        //根据jobId初始化表Table以及字段Field信息
+        RespData<String> resp = new RespData<>();
+
+        if(ObjectUtil.isEmpty(id)){
+            resp.setCode(RespCodeEnum.PARAM_EMPTY_ERROR_CODE.getCode());
+            resp.setMessage("任务Id不能为空,请重新输入");
+            return resp ;
+        }
+
+        GcJobInfo data = this.gcJobInfoMapper.getById(id);
+        if(data==null){
+            resp.setCode(RespCodeEnum.OBJECT_NOT_EXIST.getCode());
+            resp.setMessage("所属任务不存在,请重新输入");
+            return resp ;
+        }
+
+        Long dbConfigId = data.getDbConfigId() ;
+        JdbcModel jdbcModel = baseDao.getModelByDbConfigId(dbConfigId);
+        GcodeDao gcodeDao = new GcodeDao(jdbcModel.getJdbcTemplate(),jdbcModel.getSchema());
+
+
+        return resp;
     }
 
     private List<GcJobInfoDto> transferList(List<GcJobInfo> dataList){

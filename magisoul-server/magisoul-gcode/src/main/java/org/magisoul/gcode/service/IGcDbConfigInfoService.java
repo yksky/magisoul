@@ -1,6 +1,5 @@
 package org.magisoul.gcode.service;
 
-import org.magisoul.gcode.entity.GcDbConfigInfo;
 import org.magisoul.gcode.model.dto.GcDbConfigInfoDto;
 import org.magisoul.gcode.model.query.QueryGcDbConfigInfoVo;
 import org.magisoul.util.model.Pagination;

@@ -18,7 +18,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://192.168.50.68:3306/magisoul?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC
     username: root
-    password: yg123456
+    password: Yg-123456
     druid:
       initial-size: 5
       max-active: 20
@@ -28,21 +28,11 @@ spring:
       max-open-prepared-statements: 1
       time-between-eviction-runs-millis: 60000
       min-evictable-idle-time-millis: 300000
-  redis:
-    host: 192.168.50.68
-    port: 6379
-    timeout: 10000ms
-    database: 0
-    lettuce:
-      pool:
-        max-active: 8
-        max-idle: 8
-        min-idle: 0
-        max-wait: -1
 
 #mybatis:
   #type-aliases-package: org.magisoul.**.entity
-  #mapper-locations: classpath*:mapper/**/*SqlMap.xml
+  #mapper-locations: classpath*:mapper/*SqlMap.xml
   #config-location: classpath:mybatis/mybatis-config.xml
 
 login-timeout: 1800000
+gcode.schema: magisoul

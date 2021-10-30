@@ -2,7 +2,6 @@ package org.magisoul.gcode.api.impl;
 
 import com.alibaba.fastjson.JSON;
 import org.magisoul.gcode.api.IGcTableInfoApi;
-import org.magisoul.gcode.model.dto.GcJobInfoDto;
 import org.magisoul.gcode.model.dto.GcTableInfoDto;
 import org.magisoul.gcode.model.query.QueryGcTableInfoVo;
 import org.magisoul.gcode.service.IGcTableInfoService;

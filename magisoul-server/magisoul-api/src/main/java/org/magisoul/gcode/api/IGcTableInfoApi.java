@@ -1,6 +1,5 @@
 package org.magisoul.gcode.api;
 
-import org.magisoul.gcode.model.dto.GcJobInfoDto;
 import org.magisoul.gcode.model.dto.GcTableInfoDto;
 import org.magisoul.gcode.model.query.QueryGcTableInfoVo;
 import org.magisoul.util.model.Pagination;

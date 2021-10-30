@@ -6,6 +6,15 @@ public class QueryGcFieldInfoVo extends QueryPageVo {
 
     private Long jobId ;
     private Long tableId ;
+    private Long moduleId ;
+
+    public Long getModuleId() {
+        return moduleId;
+    }
+
+    public void setModuleId(Long moduleId) {
+        this.moduleId = moduleId;
+    }
 
     public Long getJobId() {
         return jobId;

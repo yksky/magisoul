@@ -1,9 +1,7 @@
 package org.magisoul.gcode.service.impl;
 
-import org.magisoul.gcode.entity.GcJobInfo;
 import org.magisoul.gcode.entity.GcTableInfo;
 import org.magisoul.gcode.mapper.IGcTableInfoMapper;
-import org.magisoul.gcode.model.dto.GcJobInfoDto;
 import org.magisoul.gcode.model.dto.GcTableInfoDto;
 import org.magisoul.gcode.model.query.QueryGcTableInfoVo;
 import org.magisoul.gcode.service.IGcTableInfoService;

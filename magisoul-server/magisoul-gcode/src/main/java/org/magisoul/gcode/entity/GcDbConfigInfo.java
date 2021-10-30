@@ -11,6 +11,7 @@ public class GcDbConfigInfo implements Serializable {
     private String dbPassword ;
     private String dbDriver ;
     private String dbUsername ;
+    private String schema ;
     private String dbType ;
     private String enableStatus ;
     private String isDeleted ;
@@ -18,6 +19,14 @@ public class GcDbConfigInfo implements Serializable {
     private String creator ;
     private Date updateTime ;
     private String updator ;
+
+    public String getSchema() {
+        return schema;
+    }
+
+    public void setSchema(String schema) {
+        this.schema = schema;
+    }
 
     public String getDbAppName() {
         return dbAppName;

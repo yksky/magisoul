@@ -73,12 +73,19 @@
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.magisoul</groupId>
+            <artifactId>magisoul-gcode</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+
         <!-- data依赖  -->
         <dependency>
             <groupId>org.magisoul</groupId>
             <artifactId>magisoul-data</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
+
     </dependencies>
 
     <build>

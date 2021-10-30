@@ -7,20 +7,34 @@
         <result column="id" property="id"/>
         <result column="job_id" property="jobId"/>
         <result column="table_id" property="tableId"/>
-        <result column="field_name" property="fieldName"/>
-        <result column="field_comment" property="fieldComment"/>
+        <result column="module_id" property="moduleId"/>
+        <result column="db_field_name" property="dbFieldName"/>
+        <result column="db_field_comment" property="dbFieldComment"/>
+        <result column="db_field_type" property="dbFieldType"/>
+        <result column="db_field_size" property="dbFieldSize"/>
         <result column="field_desc" property="fieldDesc"/>
         <result column="field_class_name" property="fieldClassName"/>
         <result column="field_entity_name" property="fieldEntityName"/>
+        <result column="field_type" property="fieldType"/>
+        <result column="field_import" property="fieldImport"/>
         <result column="is_primary_field" property="isPrimaryField"/>
         <result column="primary_type" property="primaryType"/>
         <result column="is_add_field" property="isAddField"/>
         <result column="is_edit_field" property="isEditField"/>
+        <result column="edit_type" property="editType"/>
+        <result column="is_edit_empty" property="isEditEmpty"/>
+        <result column="is_edit_unique" property="isEditUnique"/>
         <result column="is_query_field" property="isQueryField"/>
         <result column="is_list_field" property="isListField"/>
         <result column="is_delete_field" property="isDeleteField"/>
         <result column="delete_value" property="deleteValue"/>
         <result column="not_delete_value" property="notDeleteValue"/>
+        <result column="is_enable_field" property="isEnableField"/>
+        <result column="enable_value" property="enableValue"/>
+        <result column="disable_value" property="disableValue"/>
+        <result column="is_init" property="isInit"/>
+        <result column="init_time" property="initTime"/>
+        <result column="seq_no" property="seqNo"/>
         <result column="create_time" property="createTime"/>
         <result column="creator" property="creator"/>
         <result column="update_time" property="updateTime"/>
@@ -30,10 +44,14 @@
     <insert id="add" parameterType="GcFieldInfo">
     <![CDATA[
         insert into gc_field_info
-        (id, job_id, table_id, field_name, field_comment, field_desc, field_class_name, field_entity_name, is_primary_field, primary_type, is_add_field,
-         is_edit_field, is_query_field, is_list_field, is_delete_field, delete_value, not_delete_value, create_time, creator, update_time, updator)
-        values (#{id}, #{jobId}, #{tableId}, #{fieldName}, #{fieldComment}, #{fieldDesc}, #{fieldClassName}, #{fieldEntityName}, #{isPrimaryField},#{primaryType}, #{isAddField},
-                #{isEditField}, #{isQueryField}, #{isListField}, #{isDeleteField}, #{deleteValue}, #{notDeleteValue},#{createTime}, #{creator}, #{updateTime}, #{updator})
+        (id, job_id, table_id, module_id, db_field_name, db_field_comment, db_field_type, db_field_size, field_desc, field_class_name, field_entity_name,
+         field_type, field_import, is_primary_field, primary_type, is_add_field,is_edit_field, edit_type, is_edit_empty, is_edit_unique,
+         is_query_field, is_list_field, is_delete_field, delete_value, not_delete_value, is_enable_field, enable_value, disable_value,
+         create_time, creator, update_time, updator, is_init, init_time, seq_no)
+        values (#{id}, #{jobId}, #{tableId}, #{moduleId}, #{dbFieldName}, #{dbFieldComment}, #{dbFieldType}, #{dbFieldSize}, {fieldDesc}, #{fieldClassName}, #{fieldEntityName},
+                #{fieldType}, #{fieldImport}, #{isPrimaryField},#{primaryType}, #{isAddField},#{isEditField}, #{editType},#{isEditEmpty},#{isEditUnique},
+                #{isQueryField}, #{isListField}, #{isDeleteField}, #{deleteValue}, #{notDeleteValue},#{isEnableField},#{enableValue},#{disableValue},
+                #{createTime}, #{creator}, #{updateTime}, #{updator}, #{isInit}, #{initTime},#{seqNo})
         ]]>
     </insert>
 
@@ -41,15 +59,23 @@
         update gc_field_info
         set field_class_name=#{fieldClassName},
             field_entity_name=#{fieldEntityName},
+            field_desc=#{fieldDesc},
             is_primary_field=#{isPrimaryField},
             primary_type=#{primaryType},
             is_add_field=#{isAddField},
             is_edit_field=#{isEditField},
+            edit_type=#{editType},
+            is_edit_empty=#{isEditEmpty},
+            is_edit_unique=#{isEditUnique},
             is_query_field=#{isQueryField},
             is_list_field=#{isListField},
             is_delete_field=#{isDeleteField},
             delete_value=#{deleteValue},
             not_delete_value=#{notDeleteValue},
+            is_enable_field=#{isEnableField},
+            enable_value=#{enableValue},
+            disable_value=#{disableValue},
+            seq_no=#{seqNo},
             update_time=#{updateTime},
             updator=#{updator}
         where id=#{id}
@@ -72,28 +98,38 @@
             <if test="isDeleteField!=null and isDeleteField!=''"><![CDATA[ is_delete_field=#{isDeleteField}, ]]></if>
             <if test="deleteValue!=null and deleteValue!=''"><![CDATA[ delete_value=#{deleteValue}, ]]></if>
             <if test="notDeleteValue!=null and notDeleteValue!=''"><![CDATA[ not_delete_value=#{notDeleteValue}, ]]></if>
+            <if test="isEnableField!=null and isEnableField!=''"><![CDATA[ is_enable_field=#{isEnableField}, ]]></if>
+            <if test="enableValue!=null and enableValue!=''"><![CDATA[ enable_value=#{enableValue}, ]]></if>
+            <if test="disableValue!=null and disableValue!=''"><![CDATA[ disable_value=#{disableValue}, ]]></if>
             <if test="updateTime!=null"><![CDATA[ update_time=#{updateTime}, ]]></if>
             <if test="updator!=null and updator!=''"><![CDATA[ updator=#{updator}, ]]></if>
+            <if test="isInit!=null and isInit!=''"><![CDATA[ is_init=#{isInit}, ]]></if>
+            <if test="initTime!=null"><![CDATA[ init_time=#{initTime}, ]]></if>
         </set>
         where id=#{id}
     </update>
 
     <select id="getById" resultMap="BaseResultMap">
-        select id, job_id, table_id, field_name, field_comment, field_desc, field_class_name, field_entity_name, is_primary_field, primary_type, is_add_field,
-               is_edit_field, is_query_field, is_list_field, is_delete_field, delete_value, not_delete_value, create_time, creator, update_time, updator
+        select id, job_id, table_id, module_id, db_field_name, db_field_comment, db_field_type, db_field_size, field_desc, field_class_name, field_entity_name,
+               field_type, field_import, is_primary_field, primary_type, is_add_field,is_edit_field, edit_type, is_edit_empty, is_edit_unique,
+               is_query_field, is_list_field, is_delete_field, delete_value, not_delete_value, is_enable_field, enable_value, disable_value,
+               create_time, creator, update_time, updator, is_init, init_time, seq_no
           from gc_field_info
          where id=#{id}
     </select>
 
     <select id="list" parameterType="QueryGcFieldInfoVo" resultMap="BaseResultMap">
         <![CDATA[
-        select id, job_id, table_id, field_name, field_comment, field_desc, field_class_name, field_entity_name, is_primary_field, primary_type, is_add_field,
-               is_edit_field, is_query_field, is_list_field, is_delete_field, delete_value, not_delete_value, create_time, creator, update_time, updator
+        select id, job_id, table_id, module_id, db_field_name, db_field_comment, db_field_type, db_field_size, field_desc, field_class_name, field_entity_name,
+               field_type, field_import, is_primary_field, primary_type, is_add_field,is_edit_field, edit_type, is_edit_empty, is_edit_unique,
+               is_query_field, is_list_field, is_delete_field, delete_value, not_delete_value, is_enable_field, enable_value, disable_value,
+               create_time, creator, update_time, updator, is_init, init_time, seq_no
           from gc_field_info
          where 1=1
         ]]>
         <if test="jobId!=null"><![CDATA[ and job_id=#{jobId} ]]></if>
         <if test="tableId!=null"><![CDATA[ and table_id=#{tableId} ]]></if>
+        <if test="moduleId!=null"><![CDATA[ and module_id=#{moduleId} ]]></if>
         order by update_time desc
         <if test="start!=null and offset!=null"><![CDATA[ limit #{start},#{offset}]]></if>
     </select>
@@ -102,6 +138,7 @@
         select count(1) from gc_field_info where 1=1
         <if test="jobId!=null"><![CDATA[ and job_id=#{jobId} ]]></if>
         <if test="tableId!=null"><![CDATA[ and table_id=#{tableId} ]]></if>
+        <if test="moduleId!=null"><![CDATA[ and module_id=#{moduleId} ]]></if>
     </select>
 
 </mapper>
