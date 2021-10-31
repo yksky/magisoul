@@ -109,6 +109,17 @@ public class GcDbConfigInfoServiceImpl implements IGcDbConfigInfoService {
     }
 
     @Override
+    public RespData<List<GcDbConfigInfoDto>> listDefault(QueryGcDbConfigInfoVo queryGcDbConfigInfoVo) {
+        RespData<List<GcDbConfigInfoDto>> resp = new RespData<>();
+
+        List<GcDbConfigInfo> dataList = this.gcDbConfigInfoMapper.list(queryGcDbConfigInfoVo);
+        List<GcDbConfigInfoDto> dtoList = this.transferList(dataList);
+        dtoList.add(new GcDbConfigInfoDto(new Long(-1),"当前平台"));
+
+        return resp.buildSuccess(dtoList);
+    }
+
+    @Override
     public RespData<Pagination<GcDbConfigInfoDto>> pageList(QueryGcDbConfigInfoVo queryGcDbConfigInfoVo) {
         RespData<Pagination<GcDbConfigInfoDto>> resp = new RespData<>();
 
@@ -169,6 +180,7 @@ public class GcDbConfigInfoServiceImpl implements IGcDbConfigInfoService {
         String dbPassword = dto.getDbPassword();
         String enableStatus = dto.getEnableStatus();
         String dbType = dto.getDbType();
+        String dbSchema = dto.getDbSchema();
 
         List<CheckParamVo> paramList = new ArrayList<CheckParamVo>();
         paramList.add(new CheckParamVo("dbAppName","应用名称",dbAppName,"string",false,true,100));
@@ -177,6 +189,7 @@ public class GcDbConfigInfoServiceImpl implements IGcDbConfigInfoService {
         paramList.add(new CheckParamVo("dbDriver","驱动",dbDriver,"string",false,true,100));
         paramList.add(new CheckParamVo("dbPassword","密码",dbPassword,"string",true,false,100));
         paramList.add(new CheckParamVo("dbType","类型",dbType,"string",false,true,50));
+        paramList.add(new CheckParamVo("dbSchema","数据库Schema",dbSchema,"string",false,true,50));
         paramList.add(new CheckParamVo("enableStatus","使用状态",enableStatus,"string",false,true,20));
 
         Map<String,Object> checkMap = CheckUtil.checkParamData(paramList);

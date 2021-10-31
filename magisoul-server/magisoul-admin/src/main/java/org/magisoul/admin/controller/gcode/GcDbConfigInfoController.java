@@ -44,6 +44,12 @@ public class GcDbConfigInfoController {
         return JSON.toJSONString(resp);
     }
 
+    @RequestMapping("/listDefault")
+    public String listDefault(QueryGcDbConfigInfoVo queryGcDbConfigInfoVo){
+        RespData<List<GcDbConfigInfoDto>> resp = this.gcDbConfigInfoApi.listDefault(queryGcDbConfigInfoVo);
+        return JSON.toJSONString(resp);
+    }
+
     @RequestMapping("/pageList")
     public String pageList(QueryGcDbConfigInfoVo queryGcDbConfigInfoVo){
         RespData<Pagination<GcDbConfigInfoDto>> resp = this.gcDbConfigInfoApi.pageList(queryGcDbConfigInfoVo);

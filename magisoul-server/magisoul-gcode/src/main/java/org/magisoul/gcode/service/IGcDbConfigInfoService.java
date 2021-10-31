@@ -19,6 +19,8 @@ public interface IGcDbConfigInfoService {
 
     public RespData<List<GcDbConfigInfoDto>> list(QueryGcDbConfigInfoVo queryGcDbConfigInfoVo);
 
+    public RespData<List<GcDbConfigInfoDto>> listDefault(QueryGcDbConfigInfoVo queryGcDbConfigInfoVo);
+
     public RespData<Pagination<GcDbConfigInfoDto>> pageList(QueryGcDbConfigInfoVo queryGcDbConfigInfoVo);
 
     public RespData<String> deleteById(GcDbConfigInfoDto gcDbConfigInfoDto);

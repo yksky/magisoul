@@ -13,7 +13,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableTransactionManagement
-@MapperScan({"org.magisoul.gcode.mapper","org.magisoul.system.mapper"})
+@MapperScan({"org.magisoul.**.mapper"})
 public class MyBatisConfig {
 
 //    @Autowired
@@ -29,7 +29,7 @@ public class MyBatisConfig {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource);
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        sqlSessionFactoryBean.setMapperLocations(resolver.getResources("classpath:mapper/*SqlMap.xml"));
+        sqlSessionFactoryBean.setMapperLocations(resolver.getResources("classpath*:mapper/*SqlMap.xml"));
         sqlSessionFactoryBean.setConfigLocation(resolver.getResource("classpath:mybatis/mybatis-config.xml"));
         sqlSessionFactoryBean.setVfs(SpringBootVFS.class);
         sqlSessionFactoryBean.setTypeAliasesPackage("org.magisoul.system.entity,;org.magisoul.gcode.entity");

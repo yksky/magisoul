@@ -17,5 +17,7 @@ public interface IGcDbConfigInfoApi {
 
     public RespData<List<GcDbConfigInfoDto>> list(QueryGcDbConfigInfoVo queryGcDbConfigInfoVo);
 
+    public RespData<List<GcDbConfigInfoDto>> listDefault(QueryGcDbConfigInfoVo queryGcDbConfigInfoVo);
+
     public RespData<Pagination<GcDbConfigInfoDto>> pageList(QueryGcDbConfigInfoVo queryGcDbConfigInfoVo);
 }

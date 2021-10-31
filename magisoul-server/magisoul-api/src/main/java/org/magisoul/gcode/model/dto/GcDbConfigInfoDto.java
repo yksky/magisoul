@@ -14,7 +14,7 @@ public class GcDbConfigInfoDto {
     private String dbPassword ;
     private String dbDriver ;
     private String dbUsername ;
-    private String schema ;
+    private String dbSchema ;
     private String dbType ;
     private String enableStatus ;
     private String isDeleted ;
@@ -23,12 +23,21 @@ public class GcDbConfigInfoDto {
     private Date updateTime ;
     private String updator ;
 
-    public String getSchema() {
-        return schema;
+    public GcDbConfigInfoDto(){
+
     }
 
-    public void setSchema(String schema) {
-        this.schema = schema;
+    public GcDbConfigInfoDto(Long id,String dbAppName){
+        this.id = id ;
+        this.dbAppName = dbAppName ;
+    }
+
+    public String getDbSchema() {
+        return dbSchema;
+    }
+
+    public void setDbSchema(String schema) {
+        this.dbSchema = dbSchema;
     }
 
     public Long getId() {

@@ -56,7 +56,7 @@ export const constantRoutes = [
   },
   //系统管理 二级菜单
   {
-    path: '/admin',
+    path: '/admin/system',
     component: Layout,
     name: '系统管理',
     meta: {title: '系统管理'},
@@ -73,6 +73,27 @@ export const constantRoutes = [
         meta: {title:'部门新增',noCache: true},hidden: true},
       {path: 'dept/edit',component: () => import('@/views/system/dept/edit'),name: 'EditDept',
         meta: {title:'部门编辑',noCache: true},hidden: true},
+    ]
+  },
+  //代码生成
+  {
+    path: '/admin/gcode',
+    component: Layout,
+    name: '代码机器人',
+    meta: {title: '代码机器人'},
+    children: [
+      {path: 'job/list',component: () => import('@/views/gcode/job/list'),name: 'JobList',
+        meta: {title:'任务管理'}},
+      {path: 'job/add',component: () => import('@/views/gcode/job/add'),name: 'AddJob',
+        meta: {title:'新增任务',noCache: true},hidden: true},
+      {path: 'job/edit',component: () => import('@/views/gcode/job/edit'),name: 'EditJob',
+        meta: {title:'编辑任务',noCache: true},hidden: true},
+      {path: 'module/list',component: () => import('@/views/gcode/module/list'),name: 'ModuleList',
+        meta: {title:'模块管理'}},
+      {path: 'module/add',component: () => import('@/views/gcode/module/add'),name: 'AddModule',
+        meta: {title:'新增模块',noCache: true},hidden: true},
+      {path: 'module/edit',component: () => import('@/views/gcode/module/edit'),name: 'EditModule',
+        meta: {title:'编辑模块',noCache: true},hidden: true},
     ]
   },
   {

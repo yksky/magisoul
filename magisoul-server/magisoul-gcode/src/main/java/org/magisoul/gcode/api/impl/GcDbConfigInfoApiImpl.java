@@ -87,6 +87,21 @@ public class GcDbConfigInfoApiImpl implements IGcDbConfigInfoApi {
     }
 
     @Override
+    public RespData<List<GcDbConfigInfoDto>> listDefault(QueryGcDbConfigInfoVo queryGcDbConfigInfoVo) {
+        RespData<List<GcDbConfigInfoDto>> resp = new RespData<>();
+        try{
+            resp = this.gcDbConfigInfoService.listDefault(queryGcDbConfigInfoVo);
+            logger.info("类名:{},方法名:{},参数:[queryGcDbConfigInfoVo:{}],根据条件获取数据源不分页信息正常,结果信息:{}",
+                    "GcDbConfigInfoApiImpl","listDefault", JSON.toJSONString(queryGcDbConfigInfoVo),JSON.toJSONString(resp));
+        }catch(Exception e){
+            logger.error("类名:{},方法名:{},参数:[queryGcDbConfigInfoVo:{}],根据条件获取数据源不分页信息异常,异常信息:{}",
+                    "GcDbConfigInfoApiImpl","listDefault", JSON.toJSONString(queryGcDbConfigInfoVo),e);
+            resp.buildFail();
+        }
+        return resp ;
+    }
+
+    @Override
     public RespData<Pagination<GcDbConfigInfoDto>> pageList(QueryGcDbConfigInfoVo queryGcDbConfigInfoVo) {
         RespData<Pagination<GcDbConfigInfoDto>> resp = new RespData<>();
         try{

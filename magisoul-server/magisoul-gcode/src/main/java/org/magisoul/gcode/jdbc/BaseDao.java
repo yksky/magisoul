@@ -42,7 +42,7 @@ public class BaseDao {
                 dataSource.setPassword(gcDbConfigInfo.getDbPassword());
 
                 JdbcModel model = new JdbcModel();
-                model.setSchema(gcDbConfigInfo.getSchema());
+                model.setSchema(gcDbConfigInfo.getDbSchema());
                 model.setJdbcTemplate(new JdbcTemplate(dataSource));
                 return model ;
             }
