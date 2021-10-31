@@ -23,7 +23,7 @@ public class GcTableInfoApiImpl implements IGcTableInfoApi {
     Logger logger = LoggerFactory.getLogger(GcTableInfoApiImpl.class);
 
     @Override
-    public RespData<String> mergeForm(GcTableInfoDto gcTableInfoDto) {
+    public RespData<String> updateForm(GcTableInfoDto gcTableInfoDto) {
         RespData<String> resp = new RespData<>();
         try{
             resp = this.gcTableInfoService.updateForm(gcTableInfoDto);

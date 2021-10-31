@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/admin/dict")
+@RequestMapping("/admin/system/dict")
 public class SysDictInfoController {
 
     @Autowired

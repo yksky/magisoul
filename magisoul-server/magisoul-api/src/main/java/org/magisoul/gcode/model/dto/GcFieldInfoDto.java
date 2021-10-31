@@ -23,7 +23,7 @@ public class GcFieldInfoDto {
     private String fieldClassName;
     private String fieldEntityName;
     private String fieldType;
-    private String strImport;
+    private String fieldImport;
     private String isPrimaryField;
     private String primaryType;
     private String isAddField;
@@ -143,12 +143,12 @@ public class GcFieldInfoDto {
         this.fieldType = fieldType;
     }
 
-    public String getStrImport() {
-        return strImport;
+    public String getFieldImport() {
+        return fieldImport;
     }
 
-    public void setStrImport(String strImport) {
-        this.strImport = strImport;
+    public void setFieldImport(String fieldImport) {
+        this.fieldImport = fieldImport;
     }
 
     public String getIsPrimaryField() {

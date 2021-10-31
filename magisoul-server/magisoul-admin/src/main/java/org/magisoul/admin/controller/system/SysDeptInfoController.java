@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/admin/dept")
+@RequestMapping("/admin/system/dept")
 public class SysDeptInfoController {
 
     @Autowired

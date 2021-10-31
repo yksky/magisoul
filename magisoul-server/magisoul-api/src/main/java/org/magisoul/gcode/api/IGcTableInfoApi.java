@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface IGcTableInfoApi {
 
-    public RespData<String> mergeForm(GcTableInfoDto gcTableInfoDto);
+    public RespData<String> updateForm(GcTableInfoDto gcTableInfoDto);
 
     public RespData<String> updateById(GcTableInfoDto gcTableInfoDto);
 

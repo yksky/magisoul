@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/admin/resource")
+@RequestMapping("/admin/system/resource")
 public class SysResourceInfoController {
 
     @Autowired
