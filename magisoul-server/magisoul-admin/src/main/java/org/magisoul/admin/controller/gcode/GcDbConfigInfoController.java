@@ -1,9 +1,11 @@
 package org.magisoul.admin.controller.gcode;
 
 import com.alibaba.fastjson.JSON;
+import org.magisoul.admin.context.UserContext;
 import org.magisoul.gcode.api.IGcDbConfigInfoApi;
 import org.magisoul.gcode.model.dto.GcDbConfigInfoDto;
 import org.magisoul.gcode.model.query.QueryGcDbConfigInfoVo;
+import org.magisoul.system.model.dto.SysUserInfoDto;
 import org.magisoul.util.model.Pagination;
 import org.magisoul.util.model.RespData;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +24,18 @@ public class GcDbConfigInfoController {
 
     @RequestMapping("/merge")
     public String merge(@RequestBody GcDbConfigInfoDto gcDbConfigInfoDto){
+        SysUserInfoDto loginUserDto = UserContext.getUser();
+        gcDbConfigInfoDto.setCreator(loginUserDto.getUsername());
+        gcDbConfigInfoDto.setUpdator(loginUserDto.getUsername());
         RespData<String> resp = this.gcDbConfigInfoApi.mergeForm(gcDbConfigInfoDto);
         return JSON.toJSONString(resp) ;
     }
 
     @RequestMapping("/updateById")
     public String updateById(@RequestBody GcDbConfigInfoDto gcDbConfigInfoDto){
+        SysUserInfoDto loginUserDto = UserContext.getUser();
+        gcDbConfigInfoDto.setCreator(loginUserDto.getUsername());
+        gcDbConfigInfoDto.setUpdator(loginUserDto.getUsername());
         RespData<String> resp = this.gcDbConfigInfoApi.updateById(gcDbConfigInfoDto);
         return JSON.toJSONString(resp);
     }

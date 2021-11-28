@@ -82,6 +82,12 @@ export const constantRoutes = [
     name: '代码机器人',
     meta: {title: '代码机器人'},
     children: [
+      {path: 'dbConfig/list',component: () => import('@/views/gcode/dbConfig/list'),name: 'DbConfigList',
+        meta: {title:'数据源管理'}},
+      {path: 'dbConfig/add',component: () => import('@/views/gcode/dbConfig/add'),name: 'AddDbConfig',
+        meta: {title:'新增数据源',noCache: true},hidden: true},
+      {path: 'dbConfig/edit',component: () => import('@/views/gcode/dbConfig/edit'),name: 'EditDbConfig',
+        meta: {title:'编辑数据源',noCache: true},hidden: true},
       {path: 'job/list',component: () => import('@/views/gcode/job/list'),name: 'JobList',
         meta: {title:'任务管理'}},
       {path: 'job/add',component: () => import('@/views/gcode/job/add'),name: 'AddJob',
@@ -94,6 +100,10 @@ export const constantRoutes = [
         meta: {title:'新增模块',noCache: true},hidden: true},
       {path: 'module/edit',component: () => import('@/views/gcode/module/edit'),name: 'EditModule',
         meta: {title:'编辑模块',noCache: true},hidden: true},
+      {path: 'table/list',component: () => import('@/views/gcode/table/list'),name: 'TableList',
+        meta: {title:'表信息管理'}},
+      {path: 'table/edit',component: () => import('@/views/gcode/table/edit'),name: 'EditTable',
+        meta: {title:'编辑表信息',noCache: true},hidden: true},
     ]
   },
   {

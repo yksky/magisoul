@@ -220,6 +220,7 @@ public class GcDbConfigInfoServiceImpl implements IGcDbConfigInfoService {
         data.setDbAppName(dbAppName);
         data.setDbUsername(dbUsername);
         data.setEnableStatus(enableStatus);
+        data.setDbSchema(dbSchema);
         data.setId(id);
 
         return resp.buildSuccess(data) ;

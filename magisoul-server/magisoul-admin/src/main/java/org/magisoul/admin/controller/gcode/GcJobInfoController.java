@@ -1,9 +1,11 @@
 package org.magisoul.admin.controller.gcode;
 
 import com.alibaba.fastjson.JSON;
+import org.magisoul.admin.context.UserContext;
 import org.magisoul.gcode.api.IGcJobInfoApi;
 import org.magisoul.gcode.model.dto.GcJobInfoDto;
 import org.magisoul.gcode.model.query.QueryGcJobInfoVo;
+import org.magisoul.system.model.dto.SysUserInfoDto;
 import org.magisoul.util.model.Pagination;
 import org.magisoul.util.model.RespData;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +24,18 @@ public class GcJobInfoController {
 
     @RequestMapping("/merge")
     public String merge(@RequestBody GcJobInfoDto gcJobInfoDto){
+        SysUserInfoDto loginUserDto = UserContext.getUser();
+        gcJobInfoDto.setCreator(loginUserDto.getUsername());
+        gcJobInfoDto.setUpdator(loginUserDto.getUsername());
         RespData<String> resp = this.gcJobInfoApi.mergeForm(gcJobInfoDto);
         return JSON.toJSONString(resp);
     }
 
     @RequestMapping("/updateById")
     public String updateById(@RequestBody GcJobInfoDto gcJobInfoDto){
+        SysUserInfoDto loginUserDto = UserContext.getUser();
+        gcJobInfoDto.setCreator(loginUserDto.getUsername());
+        gcJobInfoDto.setUpdator(loginUserDto.getUsername());
         RespData<String> resp = this.gcJobInfoApi.updateById(gcJobInfoDto);
         return JSON.toJSONString(resp);
     }

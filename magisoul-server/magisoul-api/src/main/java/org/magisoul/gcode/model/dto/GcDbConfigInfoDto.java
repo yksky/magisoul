@@ -36,7 +36,7 @@ public class GcDbConfigInfoDto {
         return dbSchema;
     }
 
-    public void setDbSchema(String schema) {
+    public void setDbSchema(String dbSchema) {
         this.dbSchema = dbSchema;
     }
 
